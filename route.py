@@ -2,6 +2,7 @@ from directory import Directory
 from render_figure import RenderFigure
 from myscript import Myscript
 from user import User
+from executeprogram import Executeprogram
 from myrecording import Myrecording
 from place import Place
 from person import Person
@@ -33,6 +34,7 @@ class Route():
         self.dbLieu=Place()
         self.dbStuff=Stuff()
         self.dbGroupStuff=Group_stuff()
+        self.executeprogram=Executeprogram()
         self.dbPeriode=Periode()
         self.dbPersonne=Person()
         self.dbImage=Image()
@@ -218,6 +220,11 @@ class Route():
 
         self.render_figure.set_param("lyrics",hey)
         return self.render_some_json("welcome/lyrics.json")
+    def registreedition(self,search):
+        return self.render_figure.render_figure("welcome/hey.html")
+    def lignecommandewindows(self,search):
+        self.executeprogram.execute("cmd.sh")
+        return self.render_figure.render_figure("welcome/hey.html")
     def jouerjeux(self,search):
         return self.render_figure.render_figure("welcome/jeu.html")
 
@@ -283,6 +290,8 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
+            '^/registreedition$': self.registreedition,
+            '^/lignecommandewindows$': self.lignecommandewindows,
             '^/nouvelleimage$': self.nouvelleimage,
             '^/ajouterimage$': self.ajouterimage,
             '^/new$': self.nouveau,
@@ -317,7 +326,7 @@ class Route():
                        print(html)
                    self.Program.set_html(html=html)
                    self.Program.clear_notice()
-                   self.Program.redirect_if_not_logged_in()
+                   #self.Program.redirect_if_not_logged_in()
                    return self.Program
                else:
                    self.Program.set_html(html="<p>la page n'a pas été trouvée</p><a href=\"/\">retour à l'accueil</a>")
