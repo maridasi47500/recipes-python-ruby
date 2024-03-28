@@ -1,5 +1,5 @@
-# bienvenue dans réseau la tête la première
- - 
+# bienvenue dans réseau chat
+ - chat avec le hacker anonyme du moment et apprend les meileurs conseils
 - lancer:
 ```
 $ sh mysite.sh
