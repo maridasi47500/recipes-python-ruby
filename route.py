@@ -4,15 +4,12 @@ from myscript import Myscript
 from user import User
 from executeprogram import Executeprogram
 from myrecording import Myrecording
-from place import Place
-from person import Person
 from country import Country
 from periode import Periode
 from image import Image
 from stuff import Stuff
 from group_stuff import Group_stuff
 from hack import Hack
-from gossip import Gossip
 
 
 from mypic import Pic
@@ -25,18 +22,15 @@ import sys
 class Route():
     def __init__(self):
         self.dbUsers=User()
-        self.Program=Directory("premiere radio")
+        self.Program=Directory("Hacking avec python")
         self.Program.set_path("./")
         self.mysession={"notice":None,"email":None,"name":None}
         self.dbScript=Myscript()
         self.dbRecording=Myrecording()
-        self.dbRumeur=Gossip()
-        self.dbLieu=Place()
         self.dbStuff=Stuff()
         self.dbGroupStuff=Group_stuff()
         self.executeprogram=Executeprogram()
         self.dbPeriode=Periode()
-        self.dbPersonne=Person()
         self.dbImage=Image()
         self.dbCountry=Country()
         self.dbHack=Hack()
@@ -133,7 +127,6 @@ class Route():
         self.render_figure.set_param("enregistrer",True)
         return self.render_figure.render_figure("welcome/radio.html")
     def hello(self,search):
-        self.render_figure.set_param("users",self.dbPersonne.gettrois())
         print("hello action")
         return self.render_figure.render_figure("welcome/index.html")
     def delete_user(self,params={}):
@@ -169,8 +162,8 @@ class Route():
         getparams=("id",)
         print("get param, action see my new",getparams)
         myparam=self.get_this_route_param(getparams,params)
-        personn1=self.dbPersonne.getbyid(myparam["id"])
-        self.render_figure.set_param("person",personn1)
+        #personn1=self.dbPersonne.getbyid(myparam["id"])
+        #self.render_figure.set_param("person",personn1)
         self.render_figure.set_param("event",self.dbEvent.getallbypersonid(personn1["id"]))
         return self.render_figure.render_figure("ajouter/voirpersonne.html")
     def seeuser(self,params={}):
@@ -220,8 +213,13 @@ class Route():
 
         self.render_figure.set_param("lyrics",hey)
         return self.render_some_json("welcome/lyrics.json")
+    def reseau(self,search):
+        return self.render_figure.render_figure("welcome/reseau.html")
     def registreedition(self,search):
+        self.executeprogram.execute("registre.sh")
         return self.render_figure.render_figure("welcome/hey.html")
+    def wireshark(self,search):
+        return self.render_figure.render_figure("welcome/wireshark.html")
     def lignecommandewindows(self,search):
         self.executeprogram.execute("cmd.sh")
         return self.render_figure.render_figure("welcome/hey.html")
@@ -291,7 +289,9 @@ class Route():
             print("link route ",path)
             ROUTES={
             '^/registreedition$': self.registreedition,
+            '^/reseau$': self.reseau,
             '^/lignecommandewindows$': self.lignecommandewindows,
+            '^/wireshark$': self.wireshark,
             '^/nouvelleimage$': self.nouvelleimage,
             '^/ajouterimage$': self.ajouterimage,
             '^/new$': self.nouveau,
