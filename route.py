@@ -5,8 +5,10 @@ from user import User
 from executeprogram import Executeprogram
 from myrecording import Myrecording
 from country import Country
+from quickstart import Quickstart
 from periode import Periode
 from image import Image
+from html import Html
 from stuff import Stuff
 from group_stuff import Group_stuff
 from hack import Hack
@@ -28,6 +30,7 @@ class Route():
         self.dbScript=Myscript()
         self.dbRecording=Myrecording()
         self.dbStuff=Stuff()
+        self.Quickstart=Quickstart()
         self.dbGroupStuff=Group_stuff()
         self.executeprogram=Executeprogram()
         self.dbPeriode=Periode()
@@ -128,6 +131,7 @@ class Route():
         return self.render_figure.render_figure("welcome/radio.html")
     def hello(self,search):
         print("hello action")
+        self.render_figure.set_param("quickstart",self.Quickstart.getall())
         return self.render_figure.render_figure("welcome/index.html")
     def delete_user(self,params={}):
         getparams=("id",)
@@ -218,6 +222,16 @@ class Route():
     def registreedition(self,search):
         self.executeprogram.execute("registre.sh")
         return self.render_figure.render_figure("welcome/hey.html")
+    def wiresharkquickstart(self,search):
+        myparam=self.get_post_data()(params=("url",))
+        wow=self.Quickstart.create(myparam)
+        if wow["quickstart_id"]:
+            self.set_session(wow)
+            self.set_json("{\"redirect\":\"/\"}")
+            return self.render_figure.render_json()
+        else:
+            self.set_json("{\"redirect\":\"/\"}")
+            return self.render_figure.render_json()
     def wireshark(self,search):
         return self.render_figure.render_figure("welcome/wireshark.html")
     def lignecommandewindows(self,search):
@@ -266,6 +280,9 @@ class Route():
         if path and path.endswith("png"):
             self.Program=Pic(path)
             self.Program.set_path("./")
+        elif path and path.endswith("html"):
+            self.Program=Html(path)
+            self.Program.set_path("./")
         elif path and path.endswith("jpeg"):
             self.Program=Pic(path)
             self.Program.set_path("./")
@@ -291,6 +308,7 @@ class Route():
             '^/registreedition$': self.registreedition,
             '^/reseau$': self.reseau,
             '^/lignecommandewindows$': self.lignecommandewindows,
+            '^/wiresharkquickstart$': self.wiresharkquickstart,
             '^/wireshark$': self.wireshark,
             '^/nouvelleimage$': self.nouvelleimage,
             '^/ajouterimage$': self.ajouterimage,

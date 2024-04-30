@@ -6,6 +6,7 @@ class Directory():
     js=False
     nocache=False
     json=False
+    htmlcode=False
     css=False
     def __init__(self, title):
         self.title=title
@@ -91,6 +92,10 @@ class Directory():
         return self.js
     def set_js(self,html):
         self.js=html
+    def get_htmlcode(self):
+        return self.htmlcode
+    def set_htmlcode(self,html):
+        self.htmlcode=html
     def get_pic(self):
         return self.pic
     def set_pic(self,html):
