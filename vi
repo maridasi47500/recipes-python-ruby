@@ -1,0 +1,22 @@
+<h1>tester d'envoyer 1 email sur 1 faux serveur email</h1>
+<form action="/emailserver" method="post">
+<div class="field">
+<label for="email_to">A</label>
+<input type="text" value="" id="email_to" name="to"/>
+</div>
+<div class="field">
+<label for="email_from">De (mon email)</label>
+<input type="text" value="" id="email_from" name="from"/>
+</div>
+<div class="field">
+<label for="email_object">objet</label>
+<input type="text" value="" id="email_object" name="object"/>
+</div>
+<div class="field">
+<label for="email_content">content</label>
+<input type="text" value="" id="email_content" name="content"/>
+</div>
+<div class="field">
+<input type="submit" value="Tester d'envoyer l'email" id="email_submit" name="envoyeremail"/>
+</div>
+</form>

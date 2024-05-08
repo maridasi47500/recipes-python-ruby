@@ -8,7 +8,7 @@ from country import Country
 from quickstart import Quickstart
 from periode import Periode
 from image import Image
-from html import Html
+from somehtml import Somehtml
 from stuff import Stuff
 from group_stuff import Group_stuff
 from hack import Hack
@@ -82,6 +82,8 @@ class Route():
         self.Program.logout()
         self.set_redirect("/")
         return self.render_figure.render_redirect()
+    def envoiemail(self,search):
+        return self.render_figure.render_figure("welcome/formemail.html")
     def chat(self,search):
         hi=self.dbScript.getall()
         self.render_figure.set_param("scripts",hi)
@@ -129,6 +131,9 @@ class Route():
         print("hello action")
         self.render_figure.set_param("enregistrer",True)
         return self.render_figure.render_figure("welcome/radio.html")
+    def hakingprojet(self,search):
+        print("hello action")
+        return self.render_figure.render_figure("welcome/hakingprojet.html")
     def hello(self,search):
         print("hello action")
         self.render_figure.set_param("quickstart",self.Quickstart.getall())
@@ -281,7 +286,7 @@ class Route():
             self.Program=Pic(path)
             self.Program.set_path("./")
         elif path and path.endswith("html"):
-            self.Program=Html(path)
+            self.Program=Somehtml(path)
             self.Program.set_path("./")
         elif path and path.endswith("jpeg"):
             self.Program=Pic(path)
@@ -305,6 +310,8 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
+                    '^/envoiemail$': self.envoiemail,
+                    '^/hakingprojet$': self.hakingprojet,
             '^/registreedition$': self.registreedition,
             '^/reseau$': self.reseau,
             '^/lignecommandewindows$': self.lignecommandewindows,
