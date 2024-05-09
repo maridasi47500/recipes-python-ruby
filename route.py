@@ -12,6 +12,8 @@ from somehtml import Somehtml
 from stuff import Stuff
 from group_stuff import Group_stuff
 from hack import Hack
+from envoidemail import Envoidemail
+from lignecommande import Lignecommande
 
 
 from mypic import Pic
@@ -30,6 +32,7 @@ class Route():
         self.dbScript=Myscript()
         self.dbRecording=Myrecording()
         self.dbStuff=Stuff()
+        self.Monenvoidemail=Envoidemail
         self.Quickstart=Quickstart()
         self.dbGroupStuff=Group_stuff()
         self.executeprogram=Executeprogram()
@@ -90,10 +93,16 @@ class Route():
         return self.render_figure.render_figure("welcome/chat.html")
     def welcome(self,search):
         return self.render_figure.render_figure("welcome/index.html")
-    def audio_save(self,search):
-        myparam=self.get_post_data()(params=("recording",))
-        hi=self.dbRecording.create(myparam)
-        return self.render_some_json("welcome/hey.json")
+    def lancerserveuremail(self,search):
+        aze=self.get_post_data()(params=("from","to","content","password","object",))
+        hi=Lignecommande(myscript="lancer le serveur demail").ligne(lignecommande="sudo fakesmtpd --mail-dir=mail_dir --log-file=logemail.log").run()
+        self.set_notice("ok pour le script")
+        return self.render_some_json("welcome/emailimprim.json")
+    def createemail(self,search):
+        aze=self.get_post_data()(params=("from","to","content","password","object",))
+        hi=self.Monenvoidemail(sender_email=aze["from"], receiver_email=aze["to"],port=587,smtp_server="0.0.0.0",content=aze["content"],object=aze["object"]).envoyer()
+        self.set_notice(hi)
+        return self.render_some_json("welcome/emailimprim.json")
     def allscript(self,search):
         #myparam=self.get_post_data()(params=("name","content",))
         hi=self.dbScript.getall()
@@ -131,6 +140,9 @@ class Route():
         print("hello action")
         self.render_figure.set_param("enregistrer",True)
         return self.render_figure.render_figure("welcome/radio.html")
+    def emailimprim(self,search):
+        print("hello action")
+        return self.render_figure.render_figure("welcome/emailimprim.html")
     def hakingprojet(self,search):
         print("hello action")
         return self.render_figure.render_figure("welcome/hakingprojet.html")
@@ -310,6 +322,9 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
+                    '^/lancerserveuremail$': self.lancerserveuremail,
+                    '^/imprimemail$': self.emailimprim,
+                    '^/createemail$': self.createemail,
                     '^/envoiemail$': self.envoiemail,
                     '^/hakingprojet$': self.hakingprojet,
             '^/registreedition$': self.registreedition,

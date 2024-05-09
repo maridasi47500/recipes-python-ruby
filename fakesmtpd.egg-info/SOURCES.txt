@@ -1,0 +1,8 @@
+README.rst
+fakesmtpd
+fakesmtpd.service
+serveurdemail.py
+fakesmtpd.egg-info/PKG-INFO
+fakesmtpd.egg-info/SOURCES.txt
+fakesmtpd.egg-info/dependency_links.txt
+fakesmtpd.egg-info/top_level.txt
