@@ -11,7 +11,7 @@ class Lignecommande:
         print("arg len",len(x))
     self.someargs=a
   def run(self):
-    mycd=runmyscript("pwd")
-    str="""somestr="${ligne}";xterm -l -hold -e "cd ${mypwd} && echo '${myscript}' && bash -l -c '$(somestr)'" """.format(mypwd=mypwd,myscript=self.myscript,ligne=self.hey)
-    runmyscript(self.str.split(" "))
+    mypwd=runmyscript("pwd").decode()
+    str="""xterm -l -hold -e "cd '{mypwd}' & echo '{myscript}' & bash -l -c '{ligne}'" """.format(mypwd=mypwd,myscript=self.myscript,ligne=self.hey.replace('"',"'"))
+    runmyscript(str, shell=True)
     

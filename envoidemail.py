@@ -1,5 +1,6 @@
 import smtplib
 from email.message import EmailMessage
+from os import environ as aze
 
 
 
@@ -36,3 +37,7 @@ class Envoidemail():
     except Exception as e:
       return "il y a eu une erreur"+str(e)
 
+
+email=Envoidemail(sender_email=aze["from"], receiver_email=aze["to"],port=587,smtp_server="0.0.0.0",content=aze["content"],object=aze["object"])
+msg=email.envoyer()
+print(msg)
