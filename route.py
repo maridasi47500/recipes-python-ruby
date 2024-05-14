@@ -95,14 +95,14 @@ class Route():
     def lancerserveuremail(self,search):
         aze=self.get_post_data()(params=("from","to","content","password","object",))
         hi=Lignecommande(myscript="lancer le serveur demail")
-        hi.ligne(lignecommande="sudo fakesmtpd --mail-dir=mail_dir --log-file=logemail.log --host='localhost' --port=587")
+        hi.ligne(lignecommande="sudo fakesmtpd --mail-dir=mail_dir --log-file=logemail.log --host='127.0.0.1' --port=587")
         hi.run()
         self.set_notice("ok pour le script")
         return self.render_some_json("welcome/emailimprim.json")
     def createemail(self,search):
         aze=self.get_post_data()(params=("from","to","content","password","object",))
         email=self.Lignecommande("MONSCRIPT : BIENVENUE : envoi de lemail")
-        lignecommande = "from='{sender_email}' to='{receiver_email}' content='{content}' object='{object}' python3 envoidemail.py".format(sender_email=aze["from"], receiver_email=aze["to"],port=587,smtp_server="0.0.0.0",content=aze["content"],object=aze["object"]).replace("'","\'")
+        lignecommande = "from='{sender_email}' to='{receiver_email}' content='{content}' object='{object}' python3 envoidemail.py".format(sender_email=aze["from"], receiver_email=aze["to"],port=587,smtp_server="127.0.0.1",content=aze["content"],object=aze["object"]).replace("'","\'")
         print(lignecommande)
         email.ligne(lignecommande = lignecommande)
         msg=email.run()
