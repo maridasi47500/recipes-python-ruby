@@ -64,3 +64,73 @@ INFO:fakesmtpd:SMTP server started
 INFO:fakesmtpd:Mail directory mail_dir
 INFO:fakesmtpd:SMTP server started
 INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:Received signal SIGINT
+INFO:fakesmtpd:Shutting down SMTP server
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:Received signal SIGINT
+INFO:fakesmtpd:Shutting down SMTP server
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:Received signal SIGINT
+INFO:fakesmtpd:Shutting down SMTP server
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:Received signal SIGINT
+INFO:fakesmtpd:Shutting down SMTP server
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:Received signal SIGINT
+INFO:fakesmtpd:Shutting down SMTP server
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:Received signal SIGINT
+INFO:fakesmtpd:Shutting down SMTP server
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:Received signal SIGINT
+INFO:fakesmtpd:Shutting down SMTP server
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:Received signal SIGINT
+INFO:fakesmtpd:Shutting down SMTP server
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:Incoming mail from iuhi@hh.fr
+INFO:fakesmtpd:Logging mail for iuu@jh.fr
+INFO:fakesmtpd:Received signal SIGINT
+INFO:fakesmtpd:Shutting down SMTP server
+INFO:fakesmtpd:SMTP server started
+INFO:fakesmtpd:Mail directory mail_dir
+INFO:fakesmtpd:Incoming mail from iuhi@hh.fr
+INFO:fakesmtpd:Logging mail for iuu@jh.fr
+INFO:fakesmtpd:Incoming mail from iuhi@hh.fr
+INFO:fakesmtpd:Logging mail for iuu@jh.fr
+INFO:fakesmtpd:Incoming mail from iuhi@hh.fr
+INFO:fakesmtpd:Logging mail for iuu@jh.fr

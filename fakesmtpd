@@ -45,7 +45,7 @@ class FakeSMTPServer(smtpd.SMTPServer):
         self.logger.info("SMTP server started")
         self.logger.info("Mail directory %s", self.mail_dir)
 
-    def process_message(self, peer, mailfrom, rcpttos, data):
+    def process_message(self, peer, mailfrom, rcpttos, data,mail_options=None,rcpt_options=None):
         """
         Write outgoing mail data to a temporary file. Write one file
         per recipient.
@@ -56,7 +56,7 @@ class FakeSMTPServer(smtpd.SMTPServer):
             filename = "{}.{:f}.mail".format(recipient, time.time())
             path = os.path.join(self.mail_dir, filename)
             with open(path, 'w') as f:
-                f.write(data)
+                f.write(data.decode())
                 f.write('\n')
 
 
@@ -93,6 +93,7 @@ def attach_signal_handlers(server):
         """
         server.logger.info("Received signal {}".format(signals[signum]))
         server.logger.info("Shutting down SMTP server")
+
         server.close()
 
     for signum in signals.keys():

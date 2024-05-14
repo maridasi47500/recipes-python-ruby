@@ -12,7 +12,6 @@ from somehtml import Somehtml
 from stuff import Stuff
 from group_stuff import Group_stuff
 from hack import Hack
-from envoidemail import Envoidemail
 from lignecommande import Lignecommande
 
 
@@ -31,8 +30,8 @@ class Route():
         self.mysession={"notice":None,"email":None,"name":None}
         self.dbScript=Myscript()
         self.dbRecording=Myrecording()
+        self.Lignecommande=Lignecommande
         self.dbStuff=Stuff()
-        self.Monenvoidemail=Envoidemail
         self.Quickstart=Quickstart()
         self.dbGroupStuff=Group_stuff()
         self.executeprogram=Executeprogram()
@@ -96,16 +95,18 @@ class Route():
     def lancerserveuremail(self,search):
         aze=self.get_post_data()(params=("from","to","content","password","object",))
         hi=Lignecommande(myscript="lancer le serveur demail")
-        hi.ligne(lignecommande="sudo fakesmtpd --mail-dir=mail_dir --log-file=logemail.log --port=587")
+        hi.ligne(lignecommande="sudo fakesmtpd --mail-dir=mail_dir --log-file=logemail.log --host='localhost' --port=587")
         hi.run()
         self.set_notice("ok pour le script")
         return self.render_some_json("welcome/emailimprim.json")
     def createemail(self,search):
         aze=self.get_post_data()(params=("from","to","content","password","object",))
-        email=self.Lignecommande("envoi de lemail")
-        email.ligne(lignecommande = "from='{sender_email}' to='{receiver_email}' content='{content}' object='{object}' python3 envoidemail.py".format(sender_email=aze["from"], receiver_email=aze["to"],port=587,smtp_server="0.0.0.0",content=aze["content"],object=aze["object"]))
-        msg=email.envoyer()
-        self.set_notice(msg)
+        email=self.Lignecommande("MONSCRIPT : BIENVENUE : envoi de lemail")
+        lignecommande = "from='{sender_email}' to='{receiver_email}' content='{content}' object='{object}' python3 envoidemail.py".format(sender_email=aze["from"], receiver_email=aze["to"],port=587,smtp_server="0.0.0.0",content=aze["content"],object=aze["object"]).replace("'","\'")
+        print(lignecommande)
+        email.ligne(lignecommande = lignecommande)
+        msg=email.run()
+        self.set_notice("une fenetre a lance le program")
         return self.render_some_json("welcome/emailimprim.json")
     def allscript(self,search):
         #myparam=self.get_post_data()(params=("name","content",))
