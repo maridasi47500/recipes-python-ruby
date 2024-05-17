@@ -118,7 +118,7 @@ class Route():
         return self.render_some_json("welcome/emailimprim.json")
     def fausseimprimante1(self,search):
         hi=Lignecommande(myscript="fausse imprimante script 1")
-        hi.ligne(lignecommande="sh monscript/printer1.sh")
+        hi.ligne(lignecommande="sudo python3 printer1.py install")
         hi.run()
         self.set_notice("ok pour le script")
         return self.render_some_json("welcome/emailimprim.json")
@@ -357,9 +357,9 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
-                    '^/fausseimprimante3$': self.fauseimprimante3,
-                    '^/fausseimprimante2$': self.fauseimprimante2,
-                    '^/fausseimprimante1$': self.fauseimprimante1,
+                    '^/fausseimprimante3$': self.fausseimprimante3,
+                    '^/fausseimprimante2$': self.fausseimprimante2,
+                    '^/fausseimprimante1$': self.fausseimprimante1,
                     '^/lancerserveuremail$': self.lancerserveuremail,
                     '^/imprimemail$': self.emailimprim,
                     '^/createemail$': self.createemail,
