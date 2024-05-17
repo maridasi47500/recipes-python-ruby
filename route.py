@@ -92,6 +92,36 @@ class Route():
         return self.render_figure.render_figure("welcome/chat.html")
     def welcome(self,search):
         return self.render_figure.render_figure("welcome/index.html")
+    def lancerfauxrouteur(self,search):
+        hi=Lignecommande(myscript="lancer le faux routeur")
+        hi.ligne(lignecommande="python3 monscript/scriptwlan.py")
+        hi.run()
+        self.set_notice("ok pour le script")
+        return self.render_some_json("welcome/emailimprim.json")
+    def fauxrouteur(self,search):
+        hi=Lignecommande(myscript="installer les trucs pour le faux routeur")
+        hi.ligne(lignecommande="sh monscript/fauxrouteur.sh")
+        hi.run()
+        self.set_notice("ok pour le script")
+        return self.render_some_json("welcome/emailimprim.json")
+    def fausseimprimante3(self,search):
+        hi=Lignecommande(myscript="lire à propos de la fausse imprimante")
+        hi.ligne(lignecommande="cat IPPSERVERREADME.md")
+        hi.run()
+        self.set_notice("ok pour le script")
+        return self.render_some_json("welcome/emailimprim.json")
+    def fausseimprimante2(self,search):
+        hi=Lignecommande(myscript="lancer la fausse imprimante2")
+        hi.ligne(lignecommande="python -m ippserver --port 1234 save /tmp/")
+        hi.run()
+        self.set_notice("ok pour le script")
+        return self.render_some_json("welcome/emailimprim.json")
+    def fausseimprimante1(self,search):
+        hi=Lignecommande(myscript="fausse imprimante script 1")
+        hi.ligne(lignecommande="sh monscript/printer1.sh")
+        hi.run()
+        self.set_notice("ok pour le script")
+        return self.render_some_json("welcome/emailimprim.json")
     def lancerserveuremail(self,search):
         aze=self.get_post_data()(params=("from","to","content","password","object",))
         hi=Lignecommande(myscript="lancer le serveur demail")
@@ -327,10 +357,15 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
+                    '^/fausseimprimante3$': self.fauseimprimante3,
+                    '^/fausseimprimante2$': self.fauseimprimante2,
+                    '^/fausseimprimante1$': self.fauseimprimante1,
                     '^/lancerserveuremail$': self.lancerserveuremail,
                     '^/imprimemail$': self.emailimprim,
                     '^/createemail$': self.createemail,
                     '^/envoiemail$': self.envoiemail,
+                    '^/fauxrouteur$': self.fauxrouteur,
+                    '^/lancerfauxrouteur$': self.lancerfauxrouteur,
                     '^/hakingprojet$': self.hakingprojet,
             '^/registreedition$': self.registreedition,
             '^/reseau$': self.reseau,

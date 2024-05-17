@@ -134,3 +134,5 @@ INFO:fakesmtpd:Incoming mail from iuhi@hh.fr
 INFO:fakesmtpd:Logging mail for iuu@jh.fr
 INFO:fakesmtpd:Incoming mail from iuhi@hh.fr
 INFO:fakesmtpd:Logging mail for iuu@jh.fr
+INFO:fakesmtpd:Incoming mail from moi@email.com
+INFO:fakesmtpd:Logging mail for essaye@email
