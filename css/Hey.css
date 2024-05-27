@@ -47,11 +47,11 @@ width:100px;
 width:100%;
 text-align:center;
 }
-.downloadurl #wiresharkurl{
+.downloadurl [type=text]{
 height:100px;
 width:90%;
 }
-.downloadurl #wiresharksubmit{
+.downloadurl [type=submit]{
 background:blue;
 height:100px;
 color:white;
