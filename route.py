@@ -6,6 +6,8 @@ from executeprogram import Executeprogram
 from myrecording import Myrecording
 from country import Country
 from quickstart import Quickstart
+from rubyonrailsquickstart import RubyonrailsQuickstart
+from vmwarequickstart import VmwareQuickstart
 from periode import Periode
 from image import Image
 from somehtml import Somehtml
@@ -33,6 +35,8 @@ class Route():
         self.Lignecommande=Lignecommande
         self.dbStuff=Stuff()
         self.Quickstart=Quickstart()
+        self.RubyonrailsQuickstart=RubyonrailsQuickstart()
+        self.VmwareQuickstart=VmwareQuickstart()
         self.dbGroupStuff=Group_stuff()
         self.executeprogram=Executeprogram()
         self.dbPeriode=Periode()
@@ -208,6 +212,8 @@ class Route():
     def hello(self,search):
         print("hello action")
         self.render_figure.set_param("quickstart",self.Quickstart.getall())
+        self.render_figure.set_param("rubyonrailsquickstart",self.RubyonrailsQuickstart.getall())
+        self.render_figure.set_param("vmwarequickstart",self.VmwareQuickstart.getall())
         return self.render_figure.render_figure("welcome/index.html")
     def delete_user(self,params={}):
         getparams=("id",)
@@ -298,6 +304,30 @@ class Route():
     def registreedition(self,search):
         self.executeprogram.execute("registre.sh")
         return self.render_figure.render_figure("welcome/hey.html")
+    def vmwarequickstart(self,search):
+        myparam=self.get_post_data()(params=("url",))
+        wow=self.VmwareQuickstart.create(myparam)
+        if wow["vmware_quickstart_id"]:
+            self.set_session(wow)
+            self.set_json("{\"redirect\":\"/\"}")
+            return self.render_figure.render_json()
+        else:
+            self.set_json("{\"redirect\":\"/\"}")
+            return self.render_figure.render_json()
+    def vmware(self,search):
+        return self.render_figure.render_figure("welcome/vmware.html")
+    def rubyonrailsquickstart(self,search):
+        myparam=self.get_post_data()(params=("url",))
+        wow=self.RubyonrailsQuickstart.create(myparam)
+        if wow["rubyonrails_quickstart_id"]:
+            self.set_session(wow)
+            self.set_json("{\"redirect\":\"/\"}")
+            return self.render_figure.render_json()
+        else:
+            self.set_json("{\"redirect\":\"/\"}")
+            return self.render_figure.render_json()
+    def rubyonrails(self,search):
+        return self.render_figure.render_figure("welcome/rubyonrails.html")
     def wiresharkquickstart(self,search):
         myparam=self.get_post_data()(params=("url",))
         wow=self.Quickstart.create(myparam)
@@ -398,6 +428,10 @@ class Route():
             '^/registreedition$': self.registreedition,
             '^/reseau$': self.reseau,
             '^/lignecommandewindows$': self.lignecommandewindows,
+            '^/rubyonrailsquickstart$': self.rubyonrailsquickstart,
+            '^/virtualization$': self.vmware,
+            '^/vmwarequickstart$': self.vmwarequickstart,
+            '^/rubyonrails$': self.rubyonrails,
             '^/wiresharkquickstart$': self.wiresharkquickstart,
             '^/wireshark$': self.wireshark,
             '^/nouvelleimage$': self.nouvelleimage,
