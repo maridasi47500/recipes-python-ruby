@@ -104,6 +104,30 @@ class Route():
         hi.run()
         self.set_notice("ok pour le script")
         return self.render_some_json("welcome/emailimprim.json")
+    def fileserver2(self,search):
+        hi=Lignecommande(myscript="modifier le port et l'hôte")
+        hi.ligne(lignecommande="sh monscript/monserverfichier.sh")
+        hi.run()
+        self.set_notice("ok pour le script")
+        return self.render_some_json("welcome/emailimprim.json")
+    def fileserver3(self,search):
+        hi=Lignecommande(myscript="demarrer le serveur de fichier ")
+        hi.ligne(lignecommande="sudo fileserver/install")
+        hi.run()
+        self.set_notice("ok pour le script")
+        return self.render_some_json("welcome/emailimprim.json")
+    def fileserver4(self,search):
+        hi=Lignecommande(myscript="demarrer le serveur de fichier ")
+        hi.ligne(lignecommande="sudo fileserver/uninstall")
+        hi.run()
+        self.set_notice("ok pour le script")
+        return self.render_some_json("welcome/emailimprim.json")
+    def fileserver1(self,search):
+        hi=Lignecommande(myscript="lire à propos de serveur de fichier")
+        hi.ligne(lignecommande="cat fileserver/README.md")
+        hi.run()
+        self.set_notice("ok pour le script")
+        return self.render_some_json("welcome/emailimprim.json")
     def fausseimprimante3(self,search):
         hi=Lignecommande(myscript="lire à propos de la fausse imprimante")
         hi.ligne(lignecommande="cat IPPSERVERREADME.md")
@@ -357,6 +381,10 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
+                    '^/fileserver1$': self.fileserver1,
+                    '^/fileserver2$': self.fileserver2,
+                    '^/fileserver3$': self.fileserver3,
+                    '^/fileserver4$': self.fileserver4,
                     '^/fausseimprimante3$': self.fausseimprimante3,
                     '^/fausseimprimante2$': self.fausseimprimante2,
                     '^/fausseimprimante1$': self.fausseimprimante1,

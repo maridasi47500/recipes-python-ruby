@@ -1,0 +1,1 @@
+gedit fileserver/settings.py

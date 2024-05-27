@@ -1,4 +1,5 @@
 uploads/*
 __pycache__/*
+**egg-info**
 Xterm**
 mail_dir/

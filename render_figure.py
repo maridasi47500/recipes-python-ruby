@@ -101,7 +101,7 @@ class RenderFigure():
             i=0
             paspremier=False
             ligne=0
-            loc={"Executeprogram":Executeprogram,"paspremier":False,as_: "","index":"",  "params": self.params,"render_collection":self.render_collection,"date":date,"datetime":datetime}
+            loc={"collection":collection,"Executeprogram":Executeprogram,"paspremier":False,as_: "","index":0,  "params": self.params,"render_collection":self.render_collection,"date":date,"datetime":datetime}
             for y in mylocals:
                 loc[y]=mylocals[y]
 
@@ -109,6 +109,8 @@ class RenderFigure():
                 loc["index"]=i
                 loc["paspremier"]=paspremier
                 loc[as_]=x
+                print(collection[x])
+                print(i+1)
 
                 for j in myview.split("<%"):
                     try: 
@@ -120,7 +122,7 @@ class RenderFigure():
                                 continue
 
                             k=j.split("%>")
-                            print(dict(x))
+                            #print(dict(x))
                             if k[0]:
                                 print(k[0], "content render")
                                 print(k[0])
@@ -135,7 +137,7 @@ class RenderFigure():
 
                             k=j.split("%>")
 
-                            print(dict(x))
+                            #print(dict(x))
                             if k[0]:
                                 print(k[0], "content render")
                                 print(k[0])
@@ -143,8 +145,17 @@ class RenderFigure():
                                 #mystr+=str(loc["myvalue"])
                             if k[1]:
                                 mystr+=k[1]
-                    except:
-                        print("hey")
+                    except Exception as e:
+                        print("hey",e)
+                        print("Exception in user code:")
+                        print("-"*60)
+                        traceback.print_exc(file=sys.stdout)
+                        print("-"*60)
+                        somestr=("Exception in user code:\n")
+                        somestr+=("-"*60+"\n")
+                        somestr+=''.join(traceback.format_stack())
+                        somestr+=("-"*60)
+                        raise Exception(somestr)
                 i+=1
                 paspremier=True
             return mystr

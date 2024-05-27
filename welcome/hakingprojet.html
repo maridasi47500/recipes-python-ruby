@@ -1,6 +1,31 @@
 <h3>
 email server, print server,file server,firewal,db server, web server, application server,  operating system,tablet,laptop,desktop,mobile phone,switch,router
 </h3>
+<%=render_collection(collection={"email":True,"imprimante":True,"firewall":False,"db server":False,"web server":False,"fileserver":True,"tablet":False,"laptop":False,"desktop":False,"mobile":False,"switch commutateur":False,"router":True}, partial='welcome/_somecheckboxes.html', as_='item')%>
+<p>
+vous pouvez lire  
+<a href="" onclick="$.ajax({url:'/fileserver1',type:'post'});return false;"> à propos du server de fichier 
+</a>
+
+</p>
+<p>
+vous pouvez modifier l'hôte et le port que vous voulez choisir
+<a href="" onclick="$.ajax({url:'/fileserver2',type:'post'});return false;"> pour votre server de fichier 
+</a>
+
+</p>
+<p>
+<a href="" onclick="$.ajax({url:'/fileserver3',type:'post'});return false;"> lancer votre server de fichier 
+</a>
+si vous voulez
+
+</p>
+<p>
+<a href="" onclick="$.ajax({url:'/fileserver4',type:'post'});return false;"> arrêter votre server de fichier 
+</a>
+si vous voulez
+
+</p>
 <li>routeur et commutateur</li>
 <li>tout appareil y compris ordinateur, ordinateur portable et appareil mobile</li>
 <li>systemes d'exploitation client server : Some examples of client operating systems are Windows, Android, Mac, etc. In contrast, some examples of server OSs are Mac OS X, Windows Server, Red Hat Enterprise Linux, etc.</li>
