@@ -8,6 +8,7 @@ from country import Country
 from quickstart import Quickstart
 from rubyonrailsquickstart import RubyonrailsQuickstart
 from vmwarequickstart import VmwareQuickstart
+from reversequickstart import ReverseQuickstart
 from periode import Periode
 from image import Image
 from somehtml import Somehtml
@@ -37,6 +38,7 @@ class Route():
         self.Quickstart=Quickstart()
         self.RubyonrailsQuickstart=RubyonrailsQuickstart()
         self.VmwareQuickstart=VmwareQuickstart()
+        self.ReverseQuickstart=ReverseQuickstart()
         self.dbGroupStuff=Group_stuff()
         self.executeprogram=Executeprogram()
         self.dbPeriode=Periode()
@@ -214,6 +216,7 @@ class Route():
         self.render_figure.set_param("quickstart",self.Quickstart.getall())
         self.render_figure.set_param("rubyonrailsquickstart",self.RubyonrailsQuickstart.getall())
         self.render_figure.set_param("vmwarequickstart",self.VmwareQuickstart.getall())
+        self.render_figure.set_param("reversequickstart",self.ReverseQuickstart.getall())
         return self.render_figure.render_figure("welcome/index.html")
     def delete_user(self,params={}):
         getparams=("id",)
@@ -304,6 +307,31 @@ class Route():
     def registreedition(self,search):
         self.executeprogram.execute("registre.sh")
         return self.render_figure.render_figure("welcome/hey.html")
+    def reversequickstart(self,search):
+        myparam=self.get_post_data()(params=("url",))
+        wow=self.ReverseQuickstart.create(myparam)
+        if wow["reverse_quickstart_id"]:
+            self.set_session(wow)
+            self.set_json("{\"redirect\":\"/\"}")
+            return self.render_figure.render_json()
+        else:
+            self.set_json("{\"redirect\":\"/\"}")
+            return self.render_figure.render_json()
+    def mysql(self,search):
+        return self.render_figure.render_figure("welcome/mysql.html")
+    #exeutc my sql commande or svae my sql commande to db
+    #def executemysql(self,search):
+    #    myparam=self.get_post_data()(params=("lignecommande",))
+    #    wow=self.Lignecommandesql.create(myparam["lignecommande"])
+    #    if wow["lignecommande"]:
+    #        self.set_session(wow)
+    #        self.set_json("{\"redirect\":\"/mysql\"}")
+    #        return self.render_figure.render_json()
+    #    else:
+    #        self.set_json("{\"redirect\":\"/mysql\"}")
+    #        return self.render_figure.render_json()
+    def reverse(self,search):
+        return self.render_figure.render_figure("welcome/reverse.html")
     def vmwarequickstart(self,search):
         myparam=self.get_post_data()(params=("url",))
         wow=self.VmwareQuickstart.create(myparam)
@@ -430,6 +458,11 @@ class Route():
             '^/lignecommandewindows$': self.lignecommandewindows,
             '^/rubyonrailsquickstart$': self.rubyonrailsquickstart,
             '^/virtualisation$': self.vmware,
+            '^/reversequickstart$': self.reversequickstart,
+            '^/mysql$': self.mysql,
+            '^/mysql$': self.mysql,
+            '^/executemysql$': self.executemysql,
+            '^/reverse$': self.reverse,
             '^/vmwarequickstart$': self.vmwarequickstart,
             '^/script$': self.rubyonrails,
             '^/wiresharkquickstart$': self.wiresharkquickstart,
