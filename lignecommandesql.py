@@ -10,12 +10,22 @@ class Lignecommandesql(Model):
         self.con=sqlite3.connect("somesql.db")
         self.con.row_factory = sqlite3.Row
         self.cur=self.con.cursor()
-        self.cur.execute("""create table if not exists lignecommandesql(
-        id integer primary key autoincrement,
-        ligne text
-        );""")
-        self.con.commit()
+        #self.cur.execute("""create table if not exists lignecommandesql(
+        #id integer primary key autoincrement,
+        #ligne text
+        #);""")
+        #self.con.commit()
         #self.con.close()
+    def get(self,ligne):
+        try:
+            self.cur.execute(ligne)
+            if "select" in ligne:
+               row=self.cur.fetchall()
+            else:
+               row=[]
+        except:
+            row=[]
+        return row
     def execute(self,ligne):
         try:
             self.cur.execute(ligne)
@@ -23,5 +33,5 @@ class Lignecommandesql(Model):
                 self.con.commit()
             row=self.cur.fetchall()
         except:
-            row={}
+            row=[]
         return row

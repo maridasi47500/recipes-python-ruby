@@ -109,7 +109,7 @@ class RenderFigure():
                 loc["index"]=i
                 loc["paspremier"]=paspremier
                 loc[as_]=x
-                print(collection[x])
+                #print(collection[x])
                 print(i+1)
 
                 for j in myview.split("<%"):

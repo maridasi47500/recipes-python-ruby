@@ -16,6 +16,7 @@ from stuff import Stuff
 from group_stuff import Group_stuff
 from hack import Hack
 from lignecommande import Lignecommande
+from lignecommandesql import Lignecommandesql
 
 
 from mypic import Pic
@@ -152,6 +153,11 @@ class Route():
         hi.run()
         self.set_notice("ok pour le script")
         return self.render_some_json("welcome/emailimprim.json")
+    def executemysql(self,search):
+        aze=self.get_post_data()(params=("lignecommande",))
+        self.Program.set_session_params({"mysql":aze["lignecommande"]})
+        self.render_figure.set_param("redirect","/mysql")
+        return self.render_some_json("welcome/redirect.json")
     def lancerserveuremail(self,search):
         aze=self.get_post_data()(params=("from","to","content","password","object",))
         hi=Lignecommande(myscript="lancer le serveur demail")
@@ -318,6 +324,8 @@ class Route():
             self.set_json("{\"redirect\":\"/\"}")
             return self.render_figure.render_json()
     def mysql(self,search):
+        self.render_figure.set_param("mysqlresult",Lignecommandesql().get(self.Program.get_session()["mysql"]))
+
         return self.render_figure.render_figure("welcome/mysql.html")
     #exeutc my sql commande or svae my sql commande to db
     #def executemysql(self,search):
@@ -459,7 +467,6 @@ class Route():
             '^/rubyonrailsquickstart$': self.rubyonrailsquickstart,
             '^/virtualisation$': self.vmware,
             '^/reversequickstart$': self.reversequickstart,
-            '^/mysql$': self.mysql,
             '^/mysql$': self.mysql,
             '^/executemysql$': self.executemysql,
             '^/reverse$': self.reverse,
