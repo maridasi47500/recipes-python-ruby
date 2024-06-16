@@ -311,6 +311,10 @@ class Route():
         return self.render_some_json("welcome/lyrics.json")
     def reseau(self,search):
         return self.render_figure.render_figure("welcome/reseau.html")
+    def supprimerlabdd(self,search):
+        self.executeprogram.execute("rm somesql.db")
+        self.set_json("{\"redirect\":\"/\"}")
+        return self.render_figure.render_json()
     def registreedition(self,search):
         self.executeprogram.execute("registre.sh")
         return self.render_figure.render_figure("welcome/hey.html")
@@ -449,6 +453,7 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
+                    '^/supprimerlabdd$': self.supprimerlabdd,
                     '^/fileserver1$': self.fileserver1,
                     '^/fileserver2$': self.fileserver2,
                     '^/fileserver3$': self.fileserver3,
