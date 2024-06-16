@@ -37,6 +37,7 @@ class RenderFigure():
         try:
           mystr=""
           loc={"session": self.session,"render_collection": self.render_collection,"params":self.params,"getparams": self.getparams,"Fichier":Fichier,"date":date,"datetime":datetime}
+          #loc={"session": self.session,"render_collection": self.render_collection,"params":self.params,"getparams": self.getparams,"Fichier":Fichier,"date":date}
           for n in self.params:
               loc[n]=self.params[n]
           for j in self.body.split("<%"):
@@ -62,12 +63,12 @@ class RenderFigure():
                   continue
               k=j.split("%>")
               print("my session",self.session)
-              loc={"session": self.session,"render_collection": self.render_collection,"params":self.params,"getparams": self.getparams,"Fichier":Fichier,"date":date}
+
               for n in self.params:
                   loc[n]=self.params[n]
               print(k[0])
-              l=exec("myvalue="+k[0], globals(), loc)
-              mystr+=str(loc["myvalue"]) if loc["myvalue"] is not None else ""
+              l=exec(k[0], globals(), loc)
+              #mystr+=str(loc["myvalue"]) if loc["myvalue"] is not None else ""
               if k[1]:
                 mystr+=k[1]
           #if self.mytemplate is not None:

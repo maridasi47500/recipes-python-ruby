@@ -18,20 +18,30 @@ class Lignecommandesql(Model):
         #self.con.close()
     def get(self,ligne):
         try:
-            self.cur.execute(ligne)
+
             if "select" in ligne:
-               row=self.cur.fetchall()
+              self.cur.execute(ligne)
+              row=self.cur.fetchall()
             else:
-               row=[]
-        except:
-            row=[]
+              self.cur.execute(ligne)
+              row=[{"execute":"ce n'est pas un select c'est insert update ou delete"}]
+        except Exception as e:
+            print(e)
+            row=[{"error":str(e)}]
+        self.con.close()
         return row
     def execute(self,ligne):
         try:
-            self.cur.execute(ligne)
+
             if "select" not in ligne:
-                self.con.commit()
-            row=self.cur.fetchall()
-        except:
-            row=[]
+              self.cur.execute(ligne)
+              self.con.commit()
+              row=self.cur.fetchall()
+            else:
+              self.cur.execute(ligne)
+              row=self.cur.fetchall()
+        except Exception as e:
+            print(e)
+            row=[{"error":str(e)}]
+        self.con.close()
         return row

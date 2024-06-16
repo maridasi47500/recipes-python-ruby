@@ -1,12 +1,25 @@
-<h1>ligne commande sql</h1> <button id="supprimmerbdd">supprimerla base de données</button>
-<form action="/executemysql" method="post">
+<h1>ligne commande sql</h1> 
+
+ <form action="/supprimerlabdd" method="post">
+<input type="submit" value="supprimer la base de donnees" id="supprimmerbdd" />
+</form>
+ <form action="/executemysql" method="post">
 <textarea name="lignecommande" style="width:100%;" placeholder="executer la ligne de commande sql ke vous souété">
 </textarea>
 <input type="submit" value="execute sql" />
 </form>
 <p><%=session["mysql"]%></p>
 <table>
-result
-<p><%=str(params["mysqlresult"])%></p>
+<%s=list(params["mysqlresult"])%>
 
+
+<tr><td><%="</td><td>".join(list(dict(s[0]).keys())) if len(s) > 0 else ""%></td></tr>
+<%z=""%>
+<%xx=0%>
+<%def myrow(t): return "<td>"+"</td><td>".join(list(map(str,list(dict(t).values()))))+"</td>"%>
+<%xx=1%>
+<%for y in s: z+="<tr>"+myrow(y)+"</tr>"%>
+<%=z%>
 </table>
+
+

@@ -156,6 +156,7 @@ class Route():
     def executemysql(self,search):
         aze=self.get_post_data()(params=("lignecommande",))
         self.Program.set_session_params({"mysql":aze["lignecommande"]})
+        x=Lignecommandesql().execute(aze["lignecommande"])
         self.render_figure.set_param("redirect","/mysql")
         return self.render_some_json("welcome/redirect.json")
     def lancerserveuremail(self,search):
@@ -324,6 +325,7 @@ class Route():
             self.set_json("{\"redirect\":\"/\"}")
             return self.render_figure.render_json()
     def mysql(self,search):
+        print("====================+>mysqlresult",Lignecommandesql().get(self.Program.get_session()["mysql"]))
         self.render_figure.set_param("mysqlresult",Lignecommandesql().get(self.Program.get_session()["mysql"]))
 
         return self.render_figure.render_figure("welcome/mysql.html")
