@@ -218,6 +218,14 @@ class Route():
     def hakingprojet(self,search):
         print("hello action")
         return self.render_figure.render_figure("welcome/hakingprojet.html")
+    def motdepasse(self,search):
+        return self.render_figure.render_figure("welcome/motdepasse.html")
+    def hacker1connexion(self,search):
+        return self.render_figure.render_figure("welcome/hacker1connexion.html")
+    def spoofmessage(self,search):
+        return self.render_figure.render_figure("welcome/spoofmessage.html")
+    def linuxos(self,search):
+        return self.render_figure.render_figure("welcome/linuxos.html")
     def hello(self,search):
         print("hello action")
         self.render_figure.set_param("quickstart",self.Quickstart.getall())
@@ -312,8 +320,9 @@ class Route():
     def reseau(self,search):
         return self.render_figure.render_figure("welcome/reseau.html")
     def supprimerlabdd(self,search):
-        self.executeprogram.execute("rm somesql.db")
-        self.set_json("{\"redirect\":\"/\"}")
+        self.set_notice("la base de donnees de sql a été supprimée")
+        self.executeprogram.execute("somesql.sh")
+        self.set_json("{\"redirect\":\"/mysql\"}")
         return self.render_figure.render_json()
     def registreedition(self,search):
         self.executeprogram.execute("registre.sh")
@@ -453,6 +462,10 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
+                    '^/hacker1connexion$': self.hacker1connexion,
+                    '^/motdepasse$': self.motdepasse,
+                    '^/spoof$': self.spoofmessage,
+                    '^/linuxos$': self.linuxos,
                     '^/supprimerlabdd$': self.supprimerlabdd,
                     '^/fileserver1$': self.fileserver1,
                     '^/fileserver2$': self.fileserver2,
