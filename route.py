@@ -1,4 +1,5 @@
 from directory import Directory
+from activite import Activite
 from render_figure import RenderFigure
 from myscript import Myscript
 from user import User
@@ -36,6 +37,7 @@ class Route():
         self.dbRecording=Myrecording()
         self.Lignecommande=Lignecommande
         self.dbStuff=Stuff()
+        self.dbActivite=Activite()
         self.Quickstart=Quickstart()
         self.RubyonrailsQuickstart=RubyonrailsQuickstart()
         self.VmwareQuickstart=VmwareQuickstart()
@@ -188,9 +190,9 @@ class Route():
         return self.render_some_json("welcome/monscript.json")
 
 
-    def new1(self,search):
-        myparam=self.get_post_data()(params=("script","missiontarget_id","missiontype_id","missionprogram_id",))
-        #hi=self.dbMissionscript.create(myparam)
+    def haker1(self,search):
+        myparam=self.get_post_data()(params=("url","activite",))
+        hi=self.dbActivite.create(myparam)
         return self.render_some_json("welcome/mypic.json")
     def nouvelleimage(self,search):
         myparam=self.get_post_data()(params=("text","pic","mf"))
@@ -221,6 +223,7 @@ class Route():
     def motdepasse(self,search):
         return self.render_figure.render_figure("welcome/motdepasse.html")
     def hacker1connexion(self,search):
+        self.render_figure.set_param("users",self.dbActivite.getall())
         return self.render_figure.render_figure("welcome/hacker1connexion.html")
     def spoofmessage(self,search):
         return self.render_figure.render_figure("welcome/spoofmessage.html")
@@ -500,6 +503,7 @@ class Route():
             '^/welcome$': self.welcome,
             '^/signin$': self.signin,
             '^/logmeout$':self.logout,
+            '^/haker1$':self.haker1,
             '^/save_user$':self.save_user,
             '^/update_user$':self.update_user,
             "^/seeuser/([0-9]+)$":self.seeuser,

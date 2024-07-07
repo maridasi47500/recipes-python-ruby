@@ -50,7 +50,8 @@ class {modelname}(Model):
 """
 mystr+=createtable
 
-mystr+="""                );\"\"\")
+mystr+=""",
+    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP                );\"\"\")
         self.con.commit()
         #self.con.close()
     def getall(self):

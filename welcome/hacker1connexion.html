@@ -2,9 +2,45 @@
 hacker 1 connexion reso
 </h3>
 <p>
-les hacker M passer bokou de temp à haker &#129697; &#129526; &#129525; &#9986;  &#127992; 
-comme 1 pass temp
+les hacker M passer bokou de temp à haker 
+comme 1 pass temp 
 </p>
 <p>
 essayer de connaitre les ligne commande de base aérienne ng ou il faut utiliser wireshark avec avions ng
+
+
 </p>
+<table>
+<tr>
+
+<td>
+url
+</td>
+<td>
+mes activités (🪡 🧶 🧵 ✂ ,🏸,autre)
+</td>
+<td>
+nom de la connexion
+</td>
+<td>
+heure
+</td>
+<td>
+date
+</td>
+</tr>
+<tr>
+<form action="/haker1" method="post">
+<td>
+<input type="text" name="url" id="user_url"/>
+</td>
+<td>
+<textarea name="activite" id="user_activite"></textarea>
+</td>
+<td>
+<input type="submit" name="submit" id="user_submit" value="ajout"/>
+</td>
+</form>
+</tr>
+<%=render_collection(collection=params['users'], partial='welcome/_connexion.html', as_='user')%>
+</table>
