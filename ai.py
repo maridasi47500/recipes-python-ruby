@@ -72,6 +72,33 @@ class Ai(Model):
         azerty["ai_id"]=myid
         azerty["notice"]="votre ai a été ajouté"
         return azerty
+    def update(self,params):
+        print("ok")
+        myhash={}
+        for x in params:
+            if 'confirmation' in x:
+                continue
+            if 'envoyer' in x:
+                continue
+            if '[' not in x and x not in ['routeparams']:
+                #print("my params",x,params[x])
+                try:
+                  myhash[x]=str(params[x].decode())
+                except:
+                  myhash[x]=str(params[x])
+        print("M Y H A S H")
+        print(myhash,myhash.keys())
+        myid=None
+        try:
+          self.cur.execute("update ai (username,user_id,mypic,name,description,gender) values (:username,:user_id,:mypic,:name,:description,:gender)",myhash)
+          self.con.commit()
+          myid=str(self.cur.lastrowid)
+        except Exception as e:
+          print("my error"+str(e))
+        azerty={}
+        azerty["ai_id"]=myid
+        azerty["notice"]="votre ai a été ajouté"
+        return azerty
 
 
 

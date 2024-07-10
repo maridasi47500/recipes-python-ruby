@@ -119,6 +119,17 @@ class Route():
     def signin(self,search):
         return self.render_figure.render_figure("user/signin.html")
 
+    def save_ai(self,params={}):
+        myparam=self.get_post_data()(params=("name","username","mypic","gender"))
+        self.user=self.db.Ai.update(myparam)
+        if self.user["user_id"]:
+            self.set_session(self.user)
+            self.set_json("{\"redirect\":\"/editmyai\"}")
+            return self.render_figure.render_json()
+        else:
+            self.set_session(self.user)
+            self.set_json("{\"redirect\":\"/newstuff\"}")
+            return self.render_figure.render_json()
     def save_stuff(self,params={}):
         myparam=self.get_post_data()(params=("name"))
         self.user=self.db.Stuff.create(myparam)
@@ -192,6 +203,7 @@ class Route():
             '^/logmeout$':self.logout,
             '^/newstuff$':self.newstuff,
             '^/save_stuff$':self.save_stuff,
+            '^/save_ai$':self.save_ai,
             '^/save_user$':self.save_user,
             '^/update_user$':self.update_user,
             "^/seeuser/([0-9]+)$":self.seeuser,
