@@ -112,6 +112,8 @@ class Route():
 
     def signup(self,search):
         return self.render_figure.render_figure("user/signup.html")
+    def editmyai(self,search):
+        return self.render_figure.render_figure("welcome/editmyai.html")
     def signin(self,search):
         return self.render_figure.render_figure("user/signin.html")
 

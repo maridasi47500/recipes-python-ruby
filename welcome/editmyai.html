@@ -1,0 +1,46 @@
+<%ai=db.Ai.findbyuserid(session["id"]) if session["user_id"] is not None else {}%>
+
+<h2>edit my Ai</h2>
+<form method="post" action="/save_ai">
+<table>
+<tr>
+<td rowspan="10"><img id="mypic" src=""/><br>
+my pic
+<input type="file" name="mypic"/>
+<br>
+name
+<input type="text" name="name" value="<%=ai["name"]%>" />
+
+</td>
+</tr>
+<tr>
+<td colspan="2">gender
+<input type="text" name="gender"/>
+
+</td>
+</tr>
+<tr>
+</tr>
+<tr>
+<td colspan="2">username
+<input type="text" name="username" value="<%=ai["username"]%>"/>
+
+</td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+
+<tr>
+<td>
+	description
+<textarea readonly name="description" id="mydescriptionai"></textarea>
+<br>
+<br>
+<input type="submit" name="envoyer" value="envoyer"/>
+</td>
+</tr>
+</table>
+</table>
+</form>
