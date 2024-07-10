@@ -31,6 +31,11 @@ class Ai(Model):
         job=self.cur.fetchall()
         self.con.commit()
         return None
+    def findbyuserid(self,myid):
+        self.cur.execute("select * from ai where user_id = ?",(myid,))
+        row=dict(self.cur.fetchone())
+        print(row["id"], "row id")
+        return row
     def getbyid(self,myid):
         self.cur.execute("select * from ai where id = ?",(myid,))
         row=dict(self.cur.fetchone())

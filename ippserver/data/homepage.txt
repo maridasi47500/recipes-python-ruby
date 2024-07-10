@@ -1,1 +1,0 @@
-This is h2g2bob's ipp-server.py

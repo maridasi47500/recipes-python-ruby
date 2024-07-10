@@ -11,12 +11,13 @@ class Country(Model):
         self.cur.execute("""create table if not exists country(
         id integer primary key autoincrement,
         name text,
-            code text
+            phone text,
+            unicode text
                     );""")
         self.con.commit()
         #self.con.close()
     def getall(self):
-        self.cur.execute("select * from country")
+        self.cur.execute("select * from country order by name")
 
         row=self.cur.fetchall()
         return row
@@ -50,7 +51,7 @@ class Country(Model):
         print(myhash,myhash.keys())
         myid=None
         try:
-          self.cur.execute("insert into country (name,code) values (:name,:code)",myhash)
+          self.cur.execute("insert into country (name,phone,unicode) values (:name,:phone,:unicode)",myhash)
           self.con.commit()
           myid=str(self.cur.lastrowid)
         except Exception as e:

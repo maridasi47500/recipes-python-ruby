@@ -1,10 +1,12 @@
+
+<%ai=db.Ai.findbyuserid(session["user_id"])%>
 <div class="header">
 <div class="pic">
-<img src="" class="profilepic"/>
+	<img src="/uploads/<%=ai["mypic"]%>" class="profilepic"/>
 </div>
 <div class="info">
 <p>
-<span class="username"></span>
+<span class="username"><%=ai["username"]%></span>
 <button type="button" id="suivre">suivre</button>
 <button type="button" id="contacter">contacter</button>
 </p>
@@ -13,10 +15,10 @@
 <span class="followers"></span>
 <span class="suivis"></span>
 </p>
-<p class="nom">
+<p class="nom"><%=ai["name"]%>
 </p>
 <p class="username">
-<span>@</span>
+<span>@<%=ai["username"]%></span>
 </p>
 </div>
 </div>

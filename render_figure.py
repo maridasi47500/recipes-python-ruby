@@ -2,6 +2,7 @@ import re
 from fichier import Fichier
 import os
 import traceback
+from mydb import Mydb
 from executeprogram import Executeprogram
 import sys
 import datetime
@@ -36,7 +37,7 @@ class RenderFigure():
     def render_body(self):
         try:
           mystr=""
-          loc={"session": self.session,"render_collection": self.render_collection,"params":self.params,"getparams": self.getparams,"Fichier":Fichier,"date":date,"datetime":datetime}
+          loc={"db":Mydb(),"session": self.session,"render_collection": self.render_collection,"params":self.params,"getparams": self.getparams,"Fichier":Fichier,"date":date,"datetime":datetime}
           #loc={"session": self.session,"render_collection": self.render_collection,"params":self.params,"getparams": self.getparams,"Fichier":Fichier,"date":date}
           for n in self.params:
               loc[n]=self.params[n]
@@ -102,7 +103,7 @@ class RenderFigure():
             i=0
             paspremier=False
             ligne=0
-            loc={"collection":collection,"Executeprogram":Executeprogram,"paspremier":False,as_: "","index":0,  "params": self.params,"render_collection":self.render_collection,"date":date,"datetime":datetime}
+            loc={"db":Mydb(),"collection":collection,"Executeprogram":Executeprogram,"paspremier":False,as_: "","index":0,  "params": self.params,"render_collection":self.render_collection,"date":date,"datetime":datetime}
             for y in mylocals:
                 loc[y]=mylocals[y]
 
@@ -239,8 +240,10 @@ class RenderFigure():
     def render_figure(self,filename):
         self.body+=open(os.path.abspath(self.path+"/"+filename),"r").read()
         if self.mytemplate is not None:
-            self.body= open(os.path.abspath(self.mytemplate),"r").read().format(debutmots=self.title, mot=self.headingone,plusdemot=self.body)
+          self.body= open(os.path.abspath(self.mytemplate),"r").read().format(debutmots=self.title, mot=self.headingone,plusdemot=self.body)
         self.body=self.render_body()
+        while "<%" in self.body and "%>" in self.body:
+          self.body=self.render_body()
         try:
           return self.body.encode("utf-8")
         except:
