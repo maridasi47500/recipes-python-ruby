@@ -30,7 +30,7 @@ import sys
 class Route():
     def __init__(self):
         self.dbUsers=User()
-        self.Program=Directory("Hacking avec python")
+        self.Program=Directory("mme AI")
         self.Program.set_path("./")
         self.mysession={"notice":None,"email":None,"name":None}
         self.dbScript=Myscript()
@@ -400,11 +400,13 @@ class Route():
     def jouerjeux(self,search):
         return self.render_figure.render_figure("welcome/jeu.html")
 
+    def signup(self,search):
+        return self.render_figure.render_figure("user/signup.html")
     def signin(self,search):
         return self.render_figure.render_figure("user/signin.html")
 
     def save_user(self,params={}):
-        myparam=self.get_post_data()(params=("email","password","password_security","nomcomplet"))
+        myparam=self.get_post_data()(params=("email","gender","mypic","password","password_security","nomcomplet"))
         self.user=self.dbUsers.create(myparam)
         if self.user["user_id"]:
             self.set_session(self.user)
@@ -510,6 +512,8 @@ class Route():
             "^/edituser/([0-9]+)$":self.edit_user,
             "^/deleteuser/([0-9]+)$":self.delete_user,
             '^/login$':self.login,
+            '^/sign_up$':self.signup,
+            '^/sign_in$':self.signin,
 
                                                                                                     '^/users$':self.myusers,
                     '^/$': self.hello

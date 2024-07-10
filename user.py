@@ -2,6 +2,7 @@
 import sqlite3
 import sys
 import re
+frmo ai import Ai
 from model import Model
 class User(Model):
     def __init__(self):
@@ -11,9 +12,10 @@ class User(Model):
         self.cur.execute("""create table if not exists user(
         id integer primary key autoincrement,
         email text,
+        mypic text,
+        gender text,
             password text,
-            nomcomplet text,
-            password_security text
+            nomcomplet text
                     );""")
         self.con.commit()
         #self.con.close()
@@ -38,7 +40,6 @@ class User(Model):
           row["name"]=myrow["nomcomplet"]
           row["user_id"]=myrow["id"]
           row["email"]=myrow["email"]
-
         except Exception as e:
           row={"notice":"votre connexion n'a pas fonctionné","name":"","email":""}
         return row
@@ -66,12 +67,14 @@ class User(Model):
         print(myhash,myhash.keys())
         myid=None
         try:
-          self.cur.execute("insert into user (email,password,password_security,nomcomplet) values (:email,:password,:password_security,:nomcomplet)",myhash)
+          self.cur.execute("insert into user (email,password,mypic,gender,nomcomplet) values (:email,:password,:mypic,:gender,:nomcomplet)",myhash)
+
+
           self.con.commit()
           myid=str(self.cur.lastrowid)
+          Ai().create({"username":myhash["nomcomplet"],"name":myhash["nomcomplet"],"description":"","gender":myhash["gender"],"mypic":myhash["mypic"],"user_id":myid})
         except Exception as e:
           print("my error"+str(e))
-
         azerty={}
         try:
           azerty["user_id"]=myid

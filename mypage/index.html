@@ -48,7 +48,7 @@
 
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		  <a class="navbar-brand" href="/">Hacking avec python</a>
+		  <a class="navbar-brand" href="/">{debutmots}</a>
 		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			        <span class="navbar-toggler-icon"></span>
 				  </button>
@@ -58,19 +58,19 @@
                             <%="<form action=\"/logmeout\" method=\"post\"><input value=\"se deconnecter\" type=\"submit\"/></form>" if session['name'] != "" else ""%>
 
                                     <%="bienvenue "+session['name'] if session['name'] != "" else ""%>
-                                    <span class="mymessages">&#9993;<span id="lblCartCount"><%=session['nbmessage']%></span></span>
+                                    <%="<a href=\"/editmyai\">edit my AI</a>"+session['name'] if session['name'] != "" else ""%>
 
             </div>
 
 					        <ul class="navbar-nav mr-auto">
-							      <li class="nav-item active">
+ <li class="nav-item"> <a class="nav-link" href="/sign_up">S'inscrire</a> 
 
+</li> 
+ <li class="nav-item"> <a class="nav-link" href="/sign_in">Se connecter</a> 
 
-									            </li>
-										          <li class="nav-item">
-												          <a class="nav-link" href="#">Link</a>
-													        </li>
-														      <li class="nav-item dropdown">
+</li> 
+
+<li class="nav-item dropdown">
 															              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 																	                Ajouter
 																			        </a>
@@ -101,21 +101,9 @@
 								              <a class="nav-link" href="#" onclick="openForm();return false;"><img class="my-chat-pic" src="/anonymous.jpeg"/>chatter</a>
 </div>
 <div class="chat-popup" id="myForm">
-<p class="form-container">Salut. je suis le hacker anonyme. TU DOIS savoir ce qu'est lavirtualization, wireshark, les concepts comme l'adresse ip, le port , l'adresse MAC, écrire des scripts python. je vais te dire comment tu dois y arriver , tu vas y arriver.
-<a href="/registreedition">aller sur fichiers de resgitre d'edition windows</a>
-<a href="/reseau">networkin compétences : tout sur le reseau(termes)</a>
-<a href="/lignecommandewindows">ligne de commande dans windows</a>
-<a href="/wireshark">compréhension wireshark</a>
-<a href="/hakingprojet">email server, print server,file server,firewal,db server, web server, application server, client/server server operating system,tablet,laptop,desktop,mobile phone,switch,router</a>
-<a href="/mysql">mysql</a>
-<a href="/linuxos">linux os</a>
-<a href="/spoof">spoof message</a>
-<a href="/script">python ou ruby on rails</a>
-<a href="/motdepasse">mot de passe</a>
-<a href="/hacker1connexion">creer 1 faux reseau</a>
-<a href="/reverse">reverse engineering</a>
-<a href="/virtualisation">vmware workstation</a>
-
+<p class="form-container">Salut. je suis le hacker anonyme. TU DOIS savoir ce qu'est un métronome /accordeur, écrire des scripts python. je vais te dire comment tu dois y arriver , tu vas y arriver.
+<a href="/reseau">music compétences : tout sur la music(termes)</a>
+<a href="/mysql">une base de donnees de chanson</a>
 
 </p>
 <button type="button" class="closechat" onclick="closeForm();return false;">fermer</button>
