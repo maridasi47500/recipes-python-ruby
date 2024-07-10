@@ -114,9 +114,22 @@ class Route():
         return self.render_figure.render_figure("user/signup.html")
     def editmyai(self,search):
         return self.render_figure.render_figure("welcome/editmyai.html")
+    def newstuff(self,search):
+        return self.render_figure.render_figure("welcome/formstuff.html")
     def signin(self,search):
         return self.render_figure.render_figure("user/signin.html")
 
+    def save_stuff(self,params={}):
+        myparam=self.get_post_data()(params=("name"))
+        self.user=self.db.Stuff.create(myparam)
+        if self.user["user_id"]:
+            self.set_session(self.user)
+            self.set_json("{\"redirect\":\"/editmyai\"}")
+            return self.render_figure.render_json()
+        else:
+            self.set_session(self.user)
+            self.set_json("{\"redirect\":\"/newstuff\"}")
+            return self.render_figure.render_json()
     def save_user(self,params={}):
         myparam=self.get_post_data()(params=("country_id","phone","email","gender","mypic","password","password_security","nomcomplet"))
         self.user=self.dbUsers.create(myparam)
@@ -177,6 +190,8 @@ class Route():
             '^/welcome$': self.welcome,
             '^/signin$': self.signin,
             '^/logmeout$':self.logout,
+            '^/newstuff$':self.newstuff,
+            '^/save_stuff$':self.save_stuff,
             '^/save_user$':self.save_user,
             '^/update_user$':self.update_user,
             "^/seeuser/([0-9]+)$":self.seeuser,
@@ -186,7 +201,6 @@ class Route():
             '^/sign_up$':self.signup,
             '^/sign_in$':self.signin,
 
-                                                                                                    '^/users$':self.myusers,
                     '^/$': self.hello
 
                     }

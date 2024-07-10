@@ -241,10 +241,21 @@ class RenderFigure():
         self.body+=open(os.path.abspath(self.path+"/"+filename),"r").read()
         if self.mytemplate is not None:
           self.body= open(os.path.abspath(self.mytemplate),"r").read().format(debutmots=self.title, mot=self.headingone,plusdemot=self.body)
-        self.body=self.render_body()
-        while "<%" in self.body and "%>" in self.body:
-          self.body=self.render_body()
+
         try:
+          while "<%" in self.body and "%>" in self.body:
+            try:
+              self.body=self.render_body()
+            except Exception as ee:
+              self.body=str(ee)+self.render_body()
+              break
           return self.body.encode("utf-8")
-        except:
+        except Exception as e:
+          while "<%" in self.body and "%>" in self.body:
+            try:
+              self.body=self.render_body()
+            except Exception as ee:
+              self.body=str(ee)+self.render_body()
+              break
           return self.body
+

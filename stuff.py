@@ -10,9 +10,9 @@ class Stuff(Model):
         self.cur=self.con.cursor()
         self.cur.execute("""create table if not exists stuff(
         id integer primary key autoincrement,
-        name text,
-            group_stuff_id text
-                    );""")
+        name text
+    ,
+    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP                );""")
         self.con.commit()
         #self.con.close()
     def getall(self):
@@ -50,7 +50,7 @@ class Stuff(Model):
         print(myhash,myhash.keys())
         myid=None
         try:
-          self.cur.execute("insert into stuff (name,group_stuff_id) values (:name,:group_stuff_id)",myhash)
+          self.cur.execute("insert into stuff (name) values (:name)",myhash)
           self.con.commit()
           myid=str(self.cur.lastrowid)
         except Exception as e:

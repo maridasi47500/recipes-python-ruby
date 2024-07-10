@@ -33,8 +33,11 @@ class Ai(Model):
         return None
     def findbyuserid(self,myid):
         self.cur.execute("select * from ai where user_id = ?",(myid,))
-        row=dict(self.cur.fetchone())
-        print(row["id"], "row id")
+        azer=self.cur.fetchone()
+        row ={"name":"","mypic":"","username":""}
+        if azer is not None:
+          row=dict(azer)
+          print(row["id"], "row id")
         return row
     def getbyid(self,myid):
         self.cur.execute("select * from ai where id = ?",(myid,))

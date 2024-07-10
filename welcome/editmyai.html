@@ -1,4 +1,4 @@
-<%ai=db.Ai.findbyuserid(session["id"]) if session["user_id"] is not None else {}%>
+<%ai=db.Ai.findbyuserid(session["user_id"]) if session["user_id"] is not None else {}%>
 
 <h2>edit my Ai</h2>
 <form method="post" action="/save_ai">
