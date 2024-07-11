@@ -12,7 +12,7 @@ class Post(Model):
         id integer primary key autoincrement,
         pic text,
             description text,
-            user_id text
+            ai_id text
     ,
     Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP                );""")
         self.con.commit()
@@ -52,7 +52,7 @@ class Post(Model):
         print(myhash,myhash.keys())
         myid=None
         try:
-          self.cur.execute("insert into post (pic,description,user_id) values (:pic,:description,:user_id)",myhash)
+          self.cur.execute("insert into post (pic,description,ai_id) values (:pic,:description,:ai_id)",myhash)
           self.con.commit()
           myid=str(self.cur.lastrowid)
         except Exception as e:
