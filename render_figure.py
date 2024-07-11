@@ -45,7 +45,7 @@ class RenderFigure():
 
             if j[0] == "=":
               j=j[1:]
-              print(j)
+              #print(j)
               if "%>" not in j:
                   mystr+=j
                   continue
