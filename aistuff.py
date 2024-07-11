@@ -32,7 +32,7 @@ class Aistuff(Model):
         job=self.cur.fetchall()
         return job
     def getnamebyuserid(self,myid):
-        self.cur.execute("select aistuff.name from aistuff left join stuff on stuff.id = aistuff.stuff_id where aistuff.ai_id = ?",(myid,))
+        self.cur.execute("select stuff.name from aistuff left join stuff on stuff.id = aistuff.stuff_id where aistuff.ai_id = ?",(myid,))
         job=self.cur.fetchall()
         return job
     def getbyid(self,myid):

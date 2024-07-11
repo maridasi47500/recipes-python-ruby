@@ -1,5 +1,6 @@
 <div class="field">
-	<input onchange="descriptionmyai.value=$('[name=stuff]:checked').toArray().map(x=>String(x.value)).join(',');" <%="checked" if item["name"] in myai["name"] else ""%> type="checkbox" value="<%=item["id"]%>" name="stuff" id="item<%=index + 1%>"/>
-<label for="item<%=index + 1%>"><%=item["name"]%></label>
+<input onchange="mydescriptionai.value=$('[name=stuff]:checked').toArray().map(x=>String(x.nextSibling.nextSibling.innerHTML.trim())).join('\r\n');descriptionmyai.value=$('[name=stuff]:checked').toArray().map(x=>String(x.value)).join(',');" <%="checked" if item["name"] in myai["name"] else ""%> type="checkbox" value="<%=item["id"]%>" name="stuff" id="item<%=index + 1%>" />
+<label for="item<%=index + 1%>"><%=item["name"]%>
 
+</label>
 </div>
