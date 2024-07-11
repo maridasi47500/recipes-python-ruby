@@ -35,8 +35,11 @@ class Stuff(Model):
     def create(self,params):
         print("ok")
         myhash={}
+
         for x in params:
             if 'confirmation' in x:
+                continue
+            if 'description' in x:
                 continue
             if 'envoyer' in x:
                 continue
@@ -59,7 +62,3 @@ class Stuff(Model):
         azerty["stuff_id"]=myid
         azerty["notice"]="votre stuff a été ajouté"
         return azerty
-
-
-
-

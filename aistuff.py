@@ -27,6 +27,14 @@ class Aistuff(Model):
         job=self.cur.fetchall()
         self.con.commit()
         return None
+    def getidbyuserid(self,myid):
+        self.cur.execute("select id from aistuff where user_id = ?",(myid,))
+        job=self.cur.fetchall()
+        return job
+    def getnamebyuserid(self,myid):
+        self.cur.execute("select name from aistuff where user_id = ?",(myid,))
+        job=self.cur.fetchall()
+        return job
     def getbyid(self,myid):
         self.cur.execute("select * from aistuff where id = ?",(myid,))
         row=dict(self.cur.fetchone())

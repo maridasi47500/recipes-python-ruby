@@ -3,6 +3,7 @@ import sqlite3
 import sys
 import re
 from model import Model
+from aistuff import Aistuff
 class Ai(Model):
     def __init__(self):
         self.con=sqlite3.connect(self.mydb)
@@ -19,6 +20,7 @@ class Ai(Model):
     ,
     Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP                );""")
         self.con.commit()
+        self.Aistuff=Aistuff()
         #self.con.close()
     def getall(self):
         self.cur.execute("select * from ai")
@@ -75,6 +77,15 @@ class Ai(Model):
     def update(self,params):
         print("ok")
         myhash={}
+        mystuff_ids=params["description"].split(",")
+        user_id=params["user_id"]
+        allstuffs=self.Aistuff.getbyuserid(user_id)
+        for z in allstuffs:
+            if z["stuff_id"] not in mystuff_ids:
+                self.Aistuff.deletebyid(z["id"])
+        for mystuff_id in mystuff_ids:
+            if mystuff_id not in allstuffs:
+                self.Aistuff.create({"user_id":user_id,"stuff_id":mystuff_id})
         for x in params:
             if 'confirmation' in x:
                 continue

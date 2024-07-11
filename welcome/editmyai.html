@@ -30,8 +30,8 @@ name
 </div>
 <div>
 	description
-<input type="hidden" id="descriptionmyai" name="description" value="<%=ai["user_id"]%>"/>
-<textarea readonly name="mydescription" id="mydescriptionai"><%=ai["description"]%></textarea>
+<input type="hidden" id="descriptionmyai" name="description" value="<%=",".join(db.Aistuff.getidbyuserid(session["user_id"]))%>" />
+<textarea readonly name="mydescription" id="mydescriptionai"><%=",".join(db.Aistuff.getnamebyuserid(session["user_id"]))%></textarea>
 <br>
 <br>
 <input type="submit" name="envoyer" value="envoyer"/>
