@@ -1,46 +1,39 @@
 <%ai=db.Ai.findbyuserid(session["user_id"]) if session["user_id"] is not None else {}%>
 
 <h2>edit my Ai</h2>
-<form method="post" action="/save_ai">
-<table>
-<tr>
-<td rowspan="10"><img id="mypic" src=""/><br>
+<form method="post" action="/save_ai" id="form2">
+
+
+<div rowspan="10"><img id="mypic" src=""/><br>
+<input type="hidden" name="user_id" value="<%=ai["user_id"]%>"/>
+<input type="hidden" name="mypic" value="<%=ai["mypic"]%>" form="form2" id="firstpic"/>
+
 my pic
-<input type="file" name="mypic"/>
+<input type="file" name="mypic" onchange="console.log(this.files.length);firstpic.setAttribute('form', (this.files.length > 0 ?  'form1' : 'form2'));"/>
 <br>
 name
-<input type="text" name="name" value="<%=ai["name"]%>" />
+<input required type="text" name="name" value="<%=ai["name"]%>" />
 
-</td>
-</tr>
-<tr>
-<td colspan="2">gender
-<input type="text" name="gender"/>
+</div>
+<div colspan="2">gender
+<select name="gender">
+<option value="f" <%="selected" if ai["gender"] == "f" else ""%>>F</option>
+<option value="m" <%="selected" if ai["gender"] == "m" else ""%>>M</option>
+</select>
 
-</td>
-</tr>
-<tr>
-</tr>
-<tr>
-<td colspan="2">username
+
+</div>
+<div colspan="2">username
 <input type="text" name="username" value="<%=ai["username"]%>"/>
 
-</td>
-</tr>
-<tr>
-</tr>
-<tr>
-</tr>
 
-<tr>
-<td>
+</div>
+<div>
 	description
-<textarea readonly name="description" id="mydescriptionai"></textarea>
+<textarea readonly name="description" id="mydescriptionai"><%=ai["description"]%></textarea>
 <br>
 <br>
 <input type="submit" name="envoyer" value="envoyer"/>
-</td>
-</tr>
-</table>
-</table>
+</div>
 </form>
+<%=render_collection(collection=db.Stuff.getall(), partial='welcome/_somecheckboxes.html', as_='item',mylocals={"myai":{"name":'<%=ai["description"]%>'}})%>

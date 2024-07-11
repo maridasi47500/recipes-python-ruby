@@ -34,7 +34,7 @@ class Ai(Model):
     def findbyuserid(self,myid):
         self.cur.execute("select * from ai where user_id = ?",(myid,))
         azer=self.cur.fetchone()
-        row ={"name":"","mypic":"","username":""}
+        row ={"name":"","mypic":"","gender":"","username":""}
         if azer is not None:
           row=dict(azer)
           print(row["id"], "row id")
@@ -89,15 +89,24 @@ class Ai(Model):
         print("M Y H A S H")
         print(myhash,myhash.keys())
         myid=None
+        myai=None
+        userid=None
+        myname=None
         try:
-          self.cur.execute("update ai (username,user_id,mypic,name,description,gender) values (:username,:user_id,:mypic,:name,:description,:gender)",myhash)
+          self.cur.execute("update ai set username = :username,mypic = :mypic,name = :name,description = :description,gender = :gender where user_id = :user_id",myhash)
           self.con.commit()
-          myid=str(self.cur.lastrowid)
+          self.cur.execute("select * from ai where user_id = :user_id",(myhash["user_id"],))
+          myai=self.cur.fetchone()
+          myid=myai["id"]
+          userid=myai["user_id"]
+          myname=myai["name"]
         except Exception as e:
           print("my error"+str(e))
         azerty={}
         azerty["ai_id"]=myid
-        azerty["notice"]="votre ai a été ajouté"
+        azerty["user_id"]=userid
+        azerty["name"]=myname
+        azerty["notice"]="votre ai a été modifié(e)"
         return azerty
 
 

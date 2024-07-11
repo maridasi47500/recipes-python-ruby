@@ -14,10 +14,9 @@ class Directory():
         self.path="./"
         self.html=""
         self.url=""
-        self.mesparams=["mysql","email","name","user_id","notice","nbmessage"]
+        self.mesparams=["email","name","user_id","notice"]
         for y in self.mesparams:
           self.session[y]=""
-        self.session["nbmessage"]="0"
         self.redirect=False
     def logout(self):
         for x in self.mesparams:

@@ -120,25 +120,25 @@ class Route():
         return self.render_figure.render_figure("user/signin.html")
 
     def save_ai(self,params={}):
-        myparam=self.get_post_data()(params=("name","username","mypic","gender"))
+        myparam=self.get_post_data()(params=("user_id","name","username","mypic","gender","description",))
         self.user=self.db.Ai.update(myparam)
-        if self.user["user_id"]:
+        if self.user["ai_id"]:
             self.set_session(self.user)
-            self.set_json("{\"redirect\":\"/editmyai\"}")
+            self.set_json("{\"redirect\":\"/\"}")
             return self.render_figure.render_json()
         else:
             self.set_session(self.user)
-            self.set_json("{\"redirect\":\"/newstuff\"}")
+            self.set_json("{\"redirect\":\"/editmyai\"}")
             return self.render_figure.render_json()
     def save_stuff(self,params={}):
-        myparam=self.get_post_data()(params=("name"))
+        myparam=self.get_post_data()(params=("name",))
         self.user=self.db.Stuff.create(myparam)
-        if self.user["user_id"]:
-            self.set_session(self.user)
+        if self.user["stuff_id"]:
+            self.set_notice("votr truc a été ajouté")
             self.set_json("{\"redirect\":\"/editmyai\"}")
             return self.render_figure.render_json()
         else:
-            self.set_session(self.user)
+            self.set_notice("votr truc a pas été ajouté erreur")
             self.set_json("{\"redirect\":\"/newstuff\"}")
             return self.render_figure.render_json()
     def save_user(self,params={}):
