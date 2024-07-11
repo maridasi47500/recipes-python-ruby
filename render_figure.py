@@ -45,6 +45,7 @@ class RenderFigure():
 
             if j[0] == "=":
               j=j[1:]
+              print(j)
               if "%>" not in j:
                   mystr+=j
                   continue
@@ -65,8 +66,7 @@ class RenderFigure():
               k=j.split("%>")
               print("my session",self.session)
 
-              for n in self.params:
-                  loc[n]=self.params[n]
+
               print(k[0])
               l=exec(k[0], globals(), loc)
               #mystr+=str(loc["myvalue"]) if loc["myvalue"] is not None else ""
@@ -247,7 +247,7 @@ class RenderFigure():
             try:
               self.body=self.render_body()
             except Exception as ee:
-              self.body=str(ee)+self.render_body()
+              self.body=self.render_body()
               break
           return self.body.encode("utf-8")
         except Exception as e:

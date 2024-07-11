@@ -1,5 +1,5 @@
 <div class="field">
-<input <%="checked" if item["name"] in myai["name"] else ""%> type="checkbox" name="item<%=index + 1%>" id="item<%=index + 1%>"/>
+	<input onchange="descriptionmyai.value=$('[name=stuff]:checked').toArray().map(x=>String(x.value)).join(',');" <%="checked" if item["name"] in myai["name"] else ""%> type="checkbox" value="<%=item["id"]%>" name="stuff" id="item<%=index + 1%>"/>
 <label for="item<%=index + 1%>"><%=item["name"]%></label>
 
 </div>

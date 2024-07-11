@@ -30,10 +30,11 @@ name
 </div>
 <div>
 	description
-<textarea readonly name="description" id="mydescriptionai"><%=ai["description"]%></textarea>
+<input type="hidden" id="descriptionmyai" name="description" value="<%=ai["user_id"]%>"/>
+<textarea readonly name="mydescription" id="mydescriptionai"><%=ai["description"]%></textarea>
 <br>
 <br>
 <input type="submit" name="envoyer" value="envoyer"/>
 </div>
 </form>
-<%=render_collection(collection=db.Stuff.getall(), partial='welcome/_somecheckboxes.html', as_='item',mylocals={"myai":{"name":'<%=ai["description"]%>'}})%>
+<%=render_collection(collection=db.Stuff.getall(), partial='welcome/_somecheckboxes.html', as_='item',mylocals={"myai":{"name":ai["description"]}})%>
