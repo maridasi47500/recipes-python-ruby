@@ -117,8 +117,8 @@ class Ai(Model):
                 opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')]
                 urllib.request.install_opener(opener)
                 somename= f'./uploads/'+str(myai["gender"])+'_'+y["name"].replace(".","").replace(" ","_")+'_pic.jpg'
-                mstring=f'./uploads/'+Chaine().fichier(somename)
-                urllib.request.urlretrieve(hey[0]["src"], mstring)
+                mstring=Chaine().fichier(somename)
+                urllib.request.urlretrieve(hey[0]["src"], './uploads/'+mstring)
                 post=self.dbPost.create({"pic":mstring,"description":mypic,"ai_id":aiid})
         for mystuff_id in mystuff_ids:
             print("STUUUFFFFFFFF => ",mystuff_id)
@@ -134,7 +134,7 @@ class Ai(Model):
                 urllib.request.install_opener(opener)
                 somename= f'./uploads/'+str(myai["gender"])+'_'+y["name"].replace(".","").replace(" ","_")+'_pic.jpg'
                 mstring=Chaine().fichier(somename)
-                urllib.request.urlretrieve(hey[0]["src"], mstring)
+                urllib.request.urlretrieve(hey[0]["src"], './uploads/'+mstring)
                 post=self.dbPost.create({"pic":mstring,"description":mypic,"ai_id":aiid})
         for x in params:
             if 'confirmation' in x:
@@ -159,6 +159,7 @@ class Ai(Model):
           self.cur.execute("select * from ai where user_id = :user_id",(params["user_id"],))
           myai=self.cur.fetchone()
 
+          myid=myai["id"]
           userid=myai["user_id"]
           myname=myai["name"]
         except Exception as e:

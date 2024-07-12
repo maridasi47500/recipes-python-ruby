@@ -1,100 +1,175 @@
-#!/usr/bin/env python3
-"""
-License: MIT License
-Copyright (c) 2023 Miel Donkers
-
-Very simple HTTP server in python for logging requests
-Usage::
-    ./server.py [<port>]
-"""
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import logging
-from route import Route
-from urllib import parse
-from urllib.parse import parse_qs, urlparse
+# coding=utf-8
+import sqlite3
+import sys
+import re
+from model import Model
+from aistuff import Aistuff
+from chercherimage import Chercherimage
+from post import Post
 import requests
-req = requests.Session()
-req.cookies["email"]=None
-req.cookies["name"]=None
-req.cookies["notice"]=None
-from urllib.parse import urlencode
+from bs4 import BeautifulSoup
+import urllib.request
+from chaine import Chaine
+class Ai(Model):
+    def __init__(self):
+        self.con=sqlite3.connect(self.mydb)
+        self.con.row_factory = sqlite3.Row
+        self.dbPost=Post()
+        self.cur=self.con.cursor()
+        self.cur.execute("""create table if not exists ai(
+        id integer primary key autoincrement,
+        username text,
+            user_id text,
+            mypic text,
+            name text,
+            description text,
+            gender text
+    ,
+    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP                );""")
+        self.con.commit()
+        self.Aistuff=Aistuff()
+        #self.con.close()
+    def getall(self):
+        self.cur.execute("select * from ai")
+
+        row=self.cur.fetchall()
+        return row
+    def deletebyid(self,myid):
+
+        self.cur.execute("delete from ai where id = ?",(myid,))
+        job=self.cur.fetchall()
+        self.con.commit()
+        return None
+    def findbyuserid(self,myid):
+        self.cur.execute("select * from ai where user_id = ?",(myid,))
+        azer=self.cur.fetchone()
+        row ={"name":"","mypic":"","gender":"","username":""}
+        if azer is not None:
+          row=dict(azer)
+          print(row["id"], "row id")
+        return row
+    def getbyid(self,myid):
+        self.cur.execute("select * from ai where id = ?",(myid,))
+        row=dict(self.cur.fetchone())
+        print(row["id"], "row id")
+        job=self.cur.fetchall()
+        return row
+    def create(self,params):
+        print("ok")
+        myhash={}
+        for x in params:
+            if 'confirmation' in x:
+                continue
+            if 'envoyer' in x:
+                continue
+            if '[' not in x and x not in ['routeparams']:
+                #print("my params",x,params[x])
+                try:
+                  myhash[x]=str(params[x].decode())
+                except:
+                  myhash[x]=str(params[x])
+        print("M Y H A S H")
+        print(myhash,myhash.keys())
+        myid=None
+        try:
+          self.cur.execute("insert into ai (username,user_id,mypic,name,description,gender) values (:username,:user_id,:mypic,:name,:description,:gender)",myhash)
+          self.con.commit()
+          myid=str(self.cur.lastrowid)
+        except Exception as e:
+          print("my error"+str(e))
+        azerty={}
+        azerty["ai_id"]=myid
+        azerty["notice"]="votre ai a été ajouté"
+        return azerty
+    def update(self,params):
+        print("ok")
+        myhash={}
+        self.cur.execute("select * from ai where user_id = :user_id",(params["user_id"],))
+        myai=self.cur.fetchone()
+        aiid=myai["id"]
+        myid=myai["id"]
+        mystuff_ids=params["description"].split(",")
+        user_id=params["user_id"]
+        allstuffs=self.Aistuff.getbyuserid(user_id)
+        hey=None
+        self.cur.execute("select user.id as userid,country.* from user left join country on country.id = user.country_id where user.id = :user_id",(params["user_id"],))
+        mycountry=self.cur.fetchone()["name"]
+        post=None
+        mypic=None
+        hey=None
+        mstring=None
+        opener=None
+        post=None
+        z=None
+        y=None
+        for z in allstuffs:
+            print("STUUUFFFFFFFF",z)
+
+            if z["stuff_id"] not in mystuff_ids:
+                self.Aistuff.deletebyid(z["id"])
+            else:
+                self.cur.execute("select * from stuff where id = ?",(z["stuff_id"],))
+                y=self.cur.fetchone()
+                mypic=("woman" if myai["gender"] == "f" else "man")+" "+mycountry+" "+y["name"]
+                hey=Chercherimage(mypic).search()
+
+                opener=urllib.request.build_opener()
+                opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')]
+                urllib.request.install_opener(opener)
+                somename= f'./uploads/'+str(myai["gender"])+'_'+y["name"].replace(".","").replace(" ","_")+'_pic.jpg'
+                mstring='./uploads/'+Chaine().fichier(somename)
+                urllib.request.urlretrieve(hey[0]["src"], mstring)
+                post=self.dbPost.create({"pic":mstring,"description":mypic,"ai_id":aiid})
+        for mystuff_id in mystuff_ids:
+            print("STUUUFFFFFFFF => ",mystuff_id)
+            if mystuff_id not in allstuffs:
+                self.Aistuff.create({"ai_id":aiid,"stuff_id":mystuff_id})
+                self.cur.execute("select * from stuff where id = ?",(mystuff_id,))
+                y=self.cur.fetchone()
+                mypic=("woman" if myai["gender"] == "f" else "man")+" "+mycountry+" "+y["name"]
+                hey=Chercherimage(mypic).search()
+
+                opener=urllib.request.build_opener()
+                opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')]
+                urllib.request.install_opener(opener)
+                somename= f'./uploads/'+str(myai["gender"])+'_'+y["name"].replace(".","").replace(" ","_")+'_pic.jpg'
+                mstring=Chaine().fichier(somename)
+                urllib.request.urlretrieve(hey[0]["src"], mstring)
+                post=self.dbPost.create({"pic":mstring,"description":mypic,"ai_id":aiid})
+        for x in params:
+            if 'confirmation' in x:
+                continue
+            if 'envoyer' in x:
+                continue
+            if '[' not in x and x not in ['routeparams']:
+                #print("my params",x,params[x])
+                try:
+                  myhash[x]=str(params[x].decode())
+                except:
+                  myhash[x]=str(params[x])
+        print("M Y H A S H")
+        print(myhash,myhash.keys())
+        myid=None
+        myai=None
+        userid=None
+        myname=None
+        try:
+          self.cur.execute("update ai set username = :username,mypic = :mypic,name = :name,description = :description,gender = :gender where user_id = :user_id",myhash)
+          self.con.commit()
+          self.cur.execute("select * from ai where user_id = :user_id",(params["user_id"],))
+          myai=self.cur.fetchone()
+
+          userid=myai["user_id"]
+          myname=myai["name"]
+        except Exception as e:
+          print("my error"+str(e))
+        azerty={}
+        azerty["ai_id"]=myid
+        azerty["user_id"]=userid
+        azerty["name"]=myname
+        azerty["notice"]="votre ai a été modifié(e)"
+        return azerty
 
 
 
 
-class S(BaseHTTPRequestHandler):
-    def _set_response(self,redirect=False,cookies=False):
-        if redirect:
-          self.send_response(301)
-          self.send_header('Status', '301 Redirect')
-          self.send_header('Location', redirect)
-          self.send_header('Content-type', 'text/html;charset=utf-8')
-        else:
-          self.send_response(200)
-          self.send_header('Content-type', 'text/html')
-        if cookies:
-          self.send_header("Cookie", urlencode(cookies))
-        self.end_headers()
-
-    def do_GET(self):
-        logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(self.path), str(self.headers))
-        myparams = parse_qs(urlparse(self.path).query)
-
-        myProgram=Route().run(path=str(self.path),params=myparams,session=req.cookies,url=self.path)
-        if myProgram.get_session():
-          xx=myProgram.get_session()["email"]
-          yy=myProgram.get_session()["name"]
-          zz=myProgram.get_session()["notice"]
-          print("1 cookie email",xx)
-          req.cookies["email"]=xx
-          req.cookies["notice"]=zz
-
-          req.cookies["name"]=yy
-        print("cookies dict", dict(req.cookies))
-
-        self._set_response(redirect=myProgram.get_redirect(),cookies=req.cookies)
-        if zz is not None and len(zz) > 0:
-          req.cookies["notice"]=""
-        self.wfile.write(myProgram.get_html().encode('utf-8'))
-
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
-        post_data = self.rfile.read(content_length) # <--- Gets the data itself
-        logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
-                str(self.path), str(self.headers), post_data.decode('utf-8'))
-        myparams=(parse.parse_qs(post_data.decode('utf-8')))
-
-        logging.info(parse.parse_qs(post_data.decode('utf-8')))
-        myProgram=Route().run(path=str(self.path),params=myparams,session=req.cookies,url=self.path)
-        if myProgram.get_session():
-          xx=myProgram.get_session()["email"]
-          zz=myProgram.get_session()["notice"]
-          yy=myProgram.get_session()["name"]
-          print("1 cookie email",xx)
-          req.cookies["email"]=xx
-          req.cookies["name"]=yy
-          req.cookies["notice"]=zz
-        print("cookies", req.cookies)
-
-        self._set_response(redirect=myProgram.get_redirect(),cookies=req.cookies)
-        self.wfile.write(myProgram.get_html().encode('utf-8'))
-
-def run(server_class=HTTPServer, handler_class=S, port=8080):
-    logging.basicConfig(level=logging.INFO)
-    server_address = ('', port)
-    httpd = server_class(server_address, handler_class)
-    logging.info('Starting httpd...\n')
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        pass
-    httpd.server_close()
-    logging.info('Stopping httpd...\n')
-
-if __name__ == '__main__':
-    from sys import argv
-
-    if len(argv) == 2:
-        run(port=int(argv[1]))
-    else:
-        run()

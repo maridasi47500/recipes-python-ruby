@@ -31,6 +31,12 @@ return false;
 	    window.location="/";
 	    }
 },
+	  beforeSend: function(){
+		         $('.loader').show()
+		     },
+	  complete: function(){
+		         $('.loader').hide();
+		    },
     xhr: function () {
       var myXhr = $.ajaxSettings.xhr();
       if (myXhr.upload) {

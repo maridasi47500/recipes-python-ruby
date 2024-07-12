@@ -30,15 +30,27 @@ class Aistuff(Model):
     def getbyuserid(self,myid):
         self.cur.execute("select id from aistuff where ai_id = ?",(myid,))
         job=self.cur.fetchall()
-        return job
+        hey=[]
+
+        for k in job:
+            hey.append(str(k["id"]))
+        return hey
     def getidbyuserid(self,myid):
-        self.cur.execute("select id from aistuff where ai_id = ?",(myid,))
+        self.cur.execute("select * from aistuff where ai_id = ?",(myid,))
         job=self.cur.fetchall()
-        return job
+        hey=[]
+
+        for k in job:
+            hey.append(str(k["id"]))
+        return hey
     def getnamebyuserid(self,myid):
         self.cur.execute("select stuff.name from aistuff left join stuff on stuff.id = aistuff.stuff_id where aistuff.ai_id = ?",(myid,))
         job=self.cur.fetchall()
-        return job
+        hey=[]
+
+        for k in job:
+            hey.append(k["name"])
+        return hey
     def getbyid(self,myid):
         self.cur.execute("select * from aistuff where id = ?",(myid,))
         row=dict(self.cur.fetchone())
