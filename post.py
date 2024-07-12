@@ -28,6 +28,10 @@ class Post(Model):
         job=self.cur.fetchall()
         self.con.commit()
         return None
+    def getallbyaiid(self,myid):
+        self.cur.execute("select * from post where ai_id = ?",(myid,))
+        job=self.cur.fetchall()
+        return job
     def getbyid(self,myid):
         self.cur.execute("select * from post where id = ?",(myid,))
         row=dict(self.cur.fetchone())

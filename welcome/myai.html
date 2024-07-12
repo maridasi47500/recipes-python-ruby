@@ -22,5 +22,6 @@
 </p>
 </div>
 </div>
-<div class="publications">
+<div class="row row-cols-1 row-cols-md-3 g-4 publications">
+	<%=render_collection(collection=db.Post.getallbyaiid(ai["id"]), partial='welcome/_post.html', as_='post')%>
 </div>

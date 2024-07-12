@@ -9,6 +9,7 @@ from post import Post
 import requests
 from bs4 import BeautifulSoup
 import urllib.request
+from chaine import Chaine
 class Ai(Model):
     def __init__(self):
         self.con=sqlite3.connect(self.mydb)
@@ -91,7 +92,7 @@ class Ai(Model):
         user_id=params["user_id"]
         allstuffs=self.Aistuff.getbyuserid(user_id)
         hey=None
-        self.cur.execute("select country.* from user left join country on country.id = user.country_id where user_id = :user_id",(params["user_id"],))
+        self.cur.execute("select user.id as userid,country.* from user left join country on country.id = user.country_id where user.id = :user_id",(params["user_id"],))
         mycountry=self.cur.fetchone()["name"]
         post=None
         mypic=None
@@ -99,23 +100,42 @@ class Ai(Model):
         mstring=None
         opener=None
         post=None
+        z=None
+        y=None
         for z in allstuffs:
+            print("STUUUFFFFFFFF",z)
+
             if z["stuff_id"] not in mystuff_ids:
                 self.Aistuff.deletebyid(z["id"])
             else:
-                mypic=("woman" if z["gender"] == "f" else "man")+" "+mycountry+" "+z["name"]
-                hey=Chercherimage(mypic)
+                self.cur.execute("select * from stuff where id = ?",(z["stuff_id"],))
+                y=self.cur.fetchone()
+                mypic=("woman" if myai["gender"] == "f" else "man")+" "+mycountry+" "+y["name"]
+                hey=Chercherimage(mypic).search()
 
                 opener=urllib.request.build_opener()
                 opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')]
                 urllib.request.install_opener(opener)
-                somename= f'./uploads/'+str(z["gender"])+'_'+z["name"].replace(" ","_")+'_pic.jpg'
+                somename= f'./uploads/'+str(myai["gender"])+'_'+y["name"].replace(".","").replace(" ","_")+'_pic.jpg'
                 mstring=Chaine().fichier(somename)
                 urllib.request.urlretrieve(hey[0]["src"], mstring)
                 post=self.dbPost.create({"pic":mstring,"description":mypic,"ai_id":aiid})
         for mystuff_id in mystuff_ids:
+            print("STUUUFFFFFFFF => ",mystuff_id)
             if mystuff_id not in allstuffs:
                 self.Aistuff.create({"ai_id":aiid,"stuff_id":mystuff_id})
+                self.cur.execute("select * from stuff where id = ?",(mystuff_id,))
+                y=self.cur.fetchone()
+                mypic=("woman" if myai["gender"] == "f" else "man")+" "+mycountry+" "+y["name"]
+                hey=Chercherimage(mypic).search()
+
+                opener=urllib.request.build_opener()
+                opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582')]
+                urllib.request.install_opener(opener)
+                somename= f'./uploads/'+str(myai["gender"])+'_'+y["name"].replace(".","").replace(" ","_")+'_pic.jpg'
+                mstring=Chaine().fichier(somename)
+                urllib.request.urlretrieve(hey[0]["src"], mstring)
+                post=self.dbPost.create({"pic":mstring,"description":mypic,"ai_id":aiid})
         for x in params:
             if 'confirmation' in x:
                 continue
@@ -136,6 +156,8 @@ class Ai(Model):
         try:
           self.cur.execute("update ai set username = :username,mypic = :mypic,name = :name,description = :description,gender = :gender where user_id = :user_id",myhash)
           self.con.commit()
+          self.cur.execute("select * from ai where user_id = :user_id",(params["user_id"],))
+          myai=self.cur.fetchone()
 
           userid=myai["user_id"]
           myname=myai["name"]
