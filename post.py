@@ -28,12 +28,16 @@ class Post(Model):
         job=self.cur.fetchall()
         self.con.commit()
         return None
+    def getallaibyid(self,myid):
+        self.cur.execute("select * from ai where id <> ?",(myid,))
+        job=self.cur.fetchall()
+        return job
     def getallbyaiid(self,myid):
         self.cur.execute("select * from post where ai_id = ?",(myid,))
         job=self.cur.fetchall()
         return job
     def getbyid(self,myid):
-        self.cur.execute("select * from post where id = ?",(myid,))
+        self.cur.execute("select post.*,ai.mypic as aipic,ai.username as ainame from post left join ai on ai.id = post.ai_id where post.id = ?",(myid,))
         row=dict(self.cur.fetchone())
         print(row["id"], "row id")
         job=self.cur.fetchall()

@@ -10,6 +10,7 @@ import requests
 from bs4 import BeautifulSoup
 import urllib.request
 from chaine import Chaine
+import random
 class Ai(Model):
     def __init__(self):
         self.con=sqlite3.connect(self.mydb)
@@ -89,6 +90,7 @@ class Ai(Model):
         aiid=myai["id"]
         myid=myai["id"]
         mystuff_ids=params["description"].split(",")
+        random.shuffle(mystuff_ids)
         user_id=params["user_id"]
         allstuffs=self.Aistuff.getbyuserid(user_id)
         hey=None

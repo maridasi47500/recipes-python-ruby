@@ -1,5 +1,5 @@
 
-<%ai=db.Ai.findbyuserid(session["user_id"])%>
+<%ai=params["ai"]%>
 <div class="header">
 <div class="pic">
 	<img src="/uploads/<%=ai["mypic"]%>" class="profilepic"/>
@@ -11,7 +11,10 @@
 <button type="button" id="contacter">contacter</button>
 </p>
 <p>
-<span class="publication"></span>
+<span class="publication"> 
+	<%=len(db.Post.getallbyaiid(ai["id"]))%> publications
+
+</span>
 <span class="followers"></span>
 <span class="suivis"></span>
 </p>
@@ -20,8 +23,27 @@
 <p class="username">
 <span>@<%=ai["username"]%></span>
 </p>
+<p class="description">
+<%="<br>".join(db.Aistuff.getnamebyuserid(session["user_id"]))%>
+
+</p>
 </div>
 </div>
 <div class="row row-cols-1 row-cols-md-3 g-4 publications">
 	<%=render_collection(collection=db.Post.getallbyaiid(ai["id"]), partial='welcome/_post.html', as_='post')%>
+</div>
+<p>autres comptes</p>
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+	  <div class="carousel-inner">
+
+	<%=render_collection(collection=params["subList"], partial='welcome/_carousel.html', as_='carousel')%>
+										      </div>
+										        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+												    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+												        <span class="sr-only">Previous</span>
+													  </a>
+													    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+														        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+															    <span class="sr-only">Next</span>
+															      </a>
 </div>

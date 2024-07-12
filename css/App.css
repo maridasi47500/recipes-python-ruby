@@ -18,3 +18,54 @@
 						        z-index:2;
 							    overflow: auto;
 						    }
+
+
+.header {
+	width:100%;
+	clear:both;
+	float:left;
+
+}
+.pic{
+	width:30%;
+	float:left;
+	text-align:center;
+}
+.aipic {
+	    width: 50px;
+	        height: 50px;
+		    border: 3px solid red;
+		        border-radius: 999999999px;
+			        border-top-left-radius: 999999999px;
+			        border-top-right-radius: 999999999px;
+		}
+.pic img {
+	    width: 100px;
+	        height: 100px;
+		    border: 3px solid red;
+		        border-radius: 999999999px;
+		}
+.info{
+	width:70%;
+	float:left;
+}
+span.username {
+	    font-size: 23px;
+    }
+    .nom  {
+	    font-weight:700;
+    }
+    p.username {
+	        background: #80808047;
+		    width: fit-content;
+		        padding-right: 20px;
+			    padding-left: 20px;
+			        border-radius: 999999999px;
+
+			}
+			.card.show {
+				  flex-direction: row;
+			  }
+			  .card.show img.card-img-top {
+				    width: 50%;
+			    }
