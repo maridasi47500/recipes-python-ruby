@@ -73,10 +73,12 @@ class Route():
         print("hello action")
 
         if self.Program.get_session()["user_id"] is not None and self.Program.get_session()["user_id"] != "":
+          N=3
           ai=self.db.Ai.findbyuserid(self.Program.get_session()["user_id"])
           self.render_figure.set_param("ai",ai)
           theList=self.db.Post.getallaibyid(ai["id"])
           subList = [{"hey":theList[n:n+N]} for n in range(0, len(theList), N)]
+          print(subList,"SUBLIST")
           self.render_figure.set_param("subList",subList)
         return self.render_figure.render_figure("welcome/index.html")
     def delete_user(self,params={}):
@@ -97,6 +99,7 @@ class Route():
         print("get param, action see my new",getparams)
 
         if self.Program.get_session()["user_id"] is not None and self.Program.get_session()["user_id"] != "":
+          N=3
           ai=self.db.Ai.findbyuserid(self.Program.get_session()["user_id"])
           self.render_figure.set_param("ai",ai)
           myparam=self.get_this_route_param(getparams,params)
