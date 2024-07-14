@@ -1,0 +1,16 @@
+<h1>edit this post</h1>
+<%post=params["post"]%>
+<form action="/updatepost" method="post">
+<input type="hidden" value="<%=post["id"]%>" name="id" />
+<div class="actions">
+<label for="text_description">
+text du post
+</label>
+<textarea name="description" id="text_description"><%=post["description"]%></textarea>
+</div>
+<div class="actions">
+<input type="submit" value="modifier mon post" name="envoyer" />
+</div>
+
+</form>
+

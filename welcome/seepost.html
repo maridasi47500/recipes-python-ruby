@@ -13,5 +13,10 @@
 							<%=post["ainame"]%>
 													<%=post["description"]%>
 												</div>
+												<div class="card-description">
+<%="<a href=\"/editpost/"+str(post['id'])+"\">editer ce post</a>" if session['name'] != "" and str(post["ai_id"]) == str(session["ai_id"]) else ""%>
+<%="<form method=\"post\" action=\"/deletepost/"+str(post['id'])+"\"><input value=\"supprimer ce post\" type=\"submit\" /></form>" if session['name'] != "" and str(post["ai_id"]) == str(session["ai_id"]) else ""%>
+
+												</div>
 												                                                              </div>
 																											                                                                      </div>

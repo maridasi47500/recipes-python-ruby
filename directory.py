@@ -14,7 +14,7 @@ class Directory():
         self.path="./"
         self.html=""
         self.url=""
-        self.mesparams=["email","name","user_id","notice"]
+        self.mesparams=["ai_id","email","name","user_id","notice"]
         for y in self.mesparams:
           self.session[y]=""
         self.redirect=False

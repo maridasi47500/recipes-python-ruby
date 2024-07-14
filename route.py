@@ -107,6 +107,22 @@ class Route():
           subList = [{"hey":theList[n:n+N]} for n in range(0, len(theList), N)]
           self.render_figure.set_param("subList",subList)
         return self.render_figure.render_figure("welcome/myai.html")
+    def editpost(self,params={}):
+        getparams=("id",)
+        print("get param, action see my new",getparams)
+        myparam=self.get_this_route_param(getparams,params)
+        self.render_figure.set_param("post",self.db.Post.getbyid(myparam["id"]))
+        return self.render_figure.render_figure("welcome/editpost.html")
+    def deletepost(self,params={}):
+        getparams=("id",)
+        print("get param, action see my new",getparams)
+        myparam=self.get_this_route_param(getparams,params)
+        x=self.db.Post.deletebyid(myparam["id"])
+        
+        print("redirect carte didentite")
+        self.set_notice("votre post a été supprimé")
+        self.set_json("{\"redirect\":\"/\"}")
+        return self.render_figure.render_json()
     def seepost(self,params={}):
         getparams=("id",)
         print("get param, action see my new",getparams)
@@ -124,15 +140,15 @@ class Route():
         self.set_session(self.user)
         self.set_redirect(("/seeuser/"+params["id"][0]))
     def login(self,s):
-        search=self.get_post_data()(params=("email","password","password_security"))
-        self.user=self.dbUsers.getbyemailpwsecurity(search["email"],search["password"],search["password_security"])
+        search=self.get_post_data()(params=("email","password"))
+        self.user=self.dbUsers.getbyemailpwsecurity(search["email"],search["password"])
         print("user trouve", self.user)
         if self.user["email"] != "":
             print("redirect carte didentite")
             self.set_session(self.user)
-            self.set_json("{\"redirect\":\"/cartedidentite\"}")
+            self.set_json("{\"redirect\":\"/\"}")
         else:
-            self.set_json("{\"redirect\":\"/youbank\"}")
+            self.set_json("{\"redirect\":\"/sign_in\"}")
             print("session login",self.Program.get_session())
         return self.render_figure.render_json()
     def nouveau(self,search):
@@ -147,6 +163,17 @@ class Route():
     def signin(self,search):
         return self.render_figure.render_figure("user/signin.html")
 
+    def updatepost(self,params={}):
+        myparam=self.get_post_data()(params=("id","description",))
+        self.user=self.db.Post.update(myparam)
+        if self.user["post_id"]:
+            self.set_notice("vous avez bien updaté votre post")
+            self.set_json("{\"redirect\":\"/posts/"+str(self.user["post_id"])+"\"}")
+            return self.render_figure.render_json()
+        else:
+            self.set_notice("erreur pour updater votre post")
+            self.set_json("{\"redirect\":\"/editpost/"+str(self.user["post_id"])+"\"}")
+            return self.render_figure.render_json()
     def save_ai(self,params={}):
         myparam=self.get_post_data()(params=("user_id","name","username","mypic","gender","description",))
         self.user=self.db.Ai.update(myparam)
@@ -226,6 +253,9 @@ class Route():
             ROUTES={
             '^/new$': self.nouveau,
             '^/editmyai$': self.editmyai,
+            "^/editpost/([0-9]+)$":self.editpost,
+            "^/updatepost$":self.updatepost,
+            "^/deletepost/([0-9]+)$":self.deletepost,
             "^/posts/([0-9]+)$":self.seepost,
             "^/ai/([0-9]+)$":self.seepost,
             '^/welcome$': self.welcome,

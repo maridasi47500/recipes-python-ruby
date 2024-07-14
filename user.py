@@ -32,15 +32,17 @@ class User(Model):
         job=self.cur.fetchall()
         self.con.commit()
         return None
-    def getbyemailpwsecurity(self,email,pw,security):
-        self.cur.execute("select * from user where email = ? and password = ? and password_security = ?",(email,pw,security,))
+    def getbyemailpwsecurity(self,email,pw):
+        self.cur.execute("select * from user where email = ? and password = ? ",(email,pw,))
         myrow=dict(self.cur.fetchone())
         print(myrow["id"], "row id")
         row={}
+        ai=Ai().findbyuserid(self.Program.get_session()["user_id"])
         try:
           row["notice"]="vous êtes connecté"
           row["name"]=myrow["nomcomplet"]
           row["user_id"]=myrow["id"]
+          row["ai_id"]=ai["id"]
           row["email"]=myrow["email"]
         except Exception as e:
           row={"notice":"votre connexion n'a pas fonctionné","name":"","email":""}
@@ -68,12 +70,14 @@ class User(Model):
         print("M Y H A S H")
         print(myhash,myhash.keys())
         myid=None
+        ai=None
+        aiid=None
         msg=""
         try:
           self.cur.execute("insert into user (email,country_id,phone,password,mypic,gender,nomcomplet) values (:email,:country_id,:phone,:password,:mypic,:gender,:nomcomplet)",myhash)
           self.con.commit()
           myid=str(self.cur.lastrowid)
-          Ai().create({"username":myhash["nomcomplet"],"name":myhash["nomcomplet"],"description":"","gender":myhash["gender"],"mypic":myhash["mypic"],"user_id":myid})
+          ai=Ai().create({"username":myhash["nomcomplet"],"name":myhash["nomcomplet"],"description":"","gender":myhash["gender"],"mypic":myhash["mypic"],"user_id":myid})
         except Exception as e:
           print("my error"+str(e))
           msg+=str(e)
@@ -81,17 +85,20 @@ class User(Model):
         try:
           if myid and myid is not None:
             azerty["user_id"]=myid
+            azerty["ai_id"]=ai["ai_id"]
             azerty["name"]=myhash["nomcomplet"]
             azerty["email"]=myhash["email"]
             azerty["notice"]="votre user a été ajouté"
           else:
             azerty["user_id"]=""
+            azerty["ai_id"]=""
             azerty["name"]=""
             azerty["email"]=""
             azerty["notice"]="votre inscription n'a pas fonctionné"+msg
         except Exception as ee:
           azerty["user_id"]=""
           azerty["name"]=""
+          azerty["ai_id"]=""
           azerty["email"]=""
           azerty["notice"]="votre inscription n'a pas fonctionné"+msg+str(ee)
         return azerty

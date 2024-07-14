@@ -93,6 +93,7 @@ class Ai(Model):
         random.shuffle(mystuff_ids)
         user_id=params["user_id"]
         allstuffs=self.Aistuff.getbyuserid(user_id)
+        random.shuffle(allstuffs)
         hey=None
         self.cur.execute("select user.id as userid,country.* from user left join country on country.id = user.country_id where user.id = :user_id",(params["user_id"],))
         mycountry=self.cur.fetchone()["name"]

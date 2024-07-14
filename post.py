@@ -69,6 +69,32 @@ class Post(Model):
         azerty["post_id"]=myid
         azerty["notice"]="votre post a été ajouté"
         return azerty
+    def update(self,params):
+        print("ok")
+        myhash={}
+        for x in params:
+            if 'confirmation' in x:
+                continue
+            if 'envoyer' in x:
+                continue
+            if '[' not in x and x not in ['routeparams']:
+                #print("my params",x,params[x])
+                try:
+                  myhash[x]=str(params[x].decode())
+                except:
+                  myhash[x]=str(params[x])
+        print("M Y H A S H")
+        print(myhash,myhash.keys())
+        myid=None
+        try:
+          self.cur.execute("update post set description = :description where id = :id",myhash)
+          self.con.commit()
+        except Exception as e:
+          print("my error"+str(e))
+        azerty={}
+        azerty["post_id"]=params["id"]
+        azerty["notice"]="votre post a été ajouté"
+        return azerty
 
 
 
