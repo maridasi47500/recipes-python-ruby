@@ -2,7 +2,7 @@
 faire
 ```
 python3 addrecipe
-```
+````
 - ouvrir ce cook book pour essayer d'ajouter un script
 -     Strings and numbers
 -     Arrays and hashes
