@@ -1,0 +1,12 @@
+Strings and numbers
+Arrays and hashes
+Classes, modules, and namespaces
+Reflection and metaprogramming
+XML and HTML processing
+Ruby on Rails (including Ajax integration)
+Databases
+Graphics
+Internet services like email, SSH, and BitTorrent
+Web services
+Multitasking
+Graphical and terminal interfaces

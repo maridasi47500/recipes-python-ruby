@@ -1,0 +1,24 @@
+<%recipe=params["recipe"]%>
+<h1><%=recipe["name"]%></h1>
+<div><h3>ajouter une recette</h3>
+<form action="/add<%=recipe["mytype"]%>recipe" method="post">
+<input type="hidden" name="<%=recipe["mytype"]%>recipe_id" value="<%=recipe["id"]%>"/>
+<label for="user_name">
+title recipe
+</label>
+<input type="text" name="name"/>
+</div>
+<div class="field">
+<label for="user_script">
+title recipe
+</label>
+<input type="file" name="script"/>
+</div>
+<div class="actions">
+<input type="submit" name="submit" value="ajouter une recette" />
+</div>
+</form>
+</div>
+<ul id="messcripts">
+<%=render_collection(collection=db.Pythonscript.getallbyrecipeid(recipe["id"]), partial='welcome/_script.html', as_='script') if recipe["mytype"] == "python" else render_collection(collection=db.Rubyscript.getallbyrecipeid(recipe["id"]), partial='welcome/_script.html', as_='script')%>
+</ul>

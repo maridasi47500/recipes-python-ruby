@@ -123,12 +123,18 @@ class Route():
         self.set_notice("votre post a été supprimé")
         self.set_json("{\"redirect\":\"/\"}")
         return self.render_figure.render_json()
-    def seepost(self,params={}):
+    def pythonrecipe(self,params={}):
         getparams=("id",)
         print("get param, action see my new",getparams)
         myparam=self.get_this_route_param(getparams,params)
-        self.render_figure.set_param("post",self.db.Post.getbyid(myparam["id"]))
-        return self.render_figure.render_figure("welcome/seepost.html")
+        self.render_figure.set_param("recipe",self.db.Pythonrecipe.getbyid(myparam["id"]))
+        return self.render_figure.render_figure("welcome/seerecipe.html")
+    def rubyrecipe(self,params={}):
+        getparams=("id",)
+        print("get param, action see my new",getparams)
+        myparam=self.get_this_route_param(getparams,params)
+        self.render_figure.set_param("recipe",self.db.Rubyrecipe.getbyid(myparam["id"]))
+        return self.render_figure.render_figure("welcome/seerecipe.html")
     def seeuser(self,params={}):
         getparams=("id",)
         print("get param, action see my new",getparams)
@@ -256,7 +262,8 @@ class Route():
             "^/editpost/([0-9]+)$":self.editpost,
             "^/updatepost$":self.updatepost,
             "^/deletepost/([0-9]+)$":self.deletepost,
-            "^/posts/([0-9]+)$":self.seepost,
+            "^/rubyrecipe/([0-9]+)$":self.rubyrecipe,
+            "^/pythonrecipe/([0-9]+)$":self.pythonrecipe,
             "^/ai/([0-9]+)$":self.seepost,
             '^/welcome$': self.welcome,
             '^/signin$': self.signin,

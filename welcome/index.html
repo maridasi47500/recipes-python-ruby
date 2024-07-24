@@ -1,2 +1,5 @@
-<%=Fichier("./welcome","myai.html").lire() if session['name'] != "" else "<li>sinscrire ou se connecter</li><li>ajouter quelque chose sur mon ia, sport, instrument de musique, piece de la maison,métier,ville,endroit public,etc</li><li>edit my ai et choisir des options</li>"%>
+<p>Python</p>
+<%=render_collection(collection=db.Pythonrecipe.getall(), partial='welcome/_recipe.html', as_='recipe')%>
 
+<p>Ruby</p>
+<%=render_collection(collection=db.Rubyrecipe.getall(), partial='welcome/_recipe.html', as_='recipe')%>

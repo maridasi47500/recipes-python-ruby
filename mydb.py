@@ -1,15 +1,12 @@
-from country import Country
-from user import User
-from ai import Ai
-from stuff import Stuff
-from aistuff import Aistuff
-from post import Post
+mytable=["country","user","rubyrecipe","pythonrecipe","rubyscript","pythonscript"]
+loc={}
+for x in mytable:
+   exec("from "+x+" import "+x.capitalize(),loc)
+
 class Mydb():
   def __init__(self):
     print("hello")
-    self.Country=Country()
-    self.User=User()
-    self.Ai=Ai()
-    self.Stuff=Stuff()
-    self.Aistuff=Aistuff()
-    self.Post=Post()
+    for x in mytable:
+      loc["self"]=self
+      exec("self."+x.capitalize()+"="+x.capitalize()+"()",loc)
+
