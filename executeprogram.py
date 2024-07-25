@@ -12,7 +12,7 @@ FNULL = open(os.devnull, 'w')
 from subprocess import call
 class Executeprogram:
   def __init__(self,hey=""):
-    self.hey="./monscript/"+hey
+    self.hey="./uploads/"+hey
     if hey.endswith(".sh"):
       self.someargs=["sh",self.hey]
     elif hey.endswith(".py"):

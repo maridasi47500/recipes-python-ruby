@@ -1,7 +1,7 @@
 <%recipe=params["recipe"]%>
 <h1><%=recipe["name"]%></h1>
 <div><h3>ajouter une recette</h3>
-<form action="/add<%=recipe["mytype"]%>recipe" method="post">
+<form class="addrecipeform" action="/add<%=recipe["mytype"]%>recipe" method="post">
 <input type="hidden" name="<%=recipe["mytype"]%>recipe_id" value="<%=recipe["id"]%>"/>
 <label for="user_name">
 title recipe

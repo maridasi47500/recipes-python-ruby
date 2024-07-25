@@ -191,16 +191,41 @@ class Route():
             self.set_session(self.user)
             self.set_json("{\"redirect\":\"/editmyai\"}")
             return self.render_figure.render_json()
-    def save_stuff(self,params={}):
-        myparam=self.get_post_data()(params=("name",))
-        self.user=self.db.Stuff.create(myparam)
-        if self.user["stuff_id"]:
-            self.set_notice("votr truc a été ajouté")
-            self.set_json("{\"redirect\":\"/editmyai\"}")
+    def pythonrecipe(self,params={}):
+        myparam=self.get_post_data()(params=("myid",))
+        script=self.db.Pythonscript.findbyid(myparam["myid"])["script"]
+        print(script)
+        self.set_notice("votre python script a pas été ajouté erreur")
+        self.set_json("{\"redirect\":\"/pythonscript/"+str(myparam["pythonrecipe_id"])+"\"}")
+        return self.render_figure.render_json()
+    def rubyrecipe(self,params={}):
+        myparam=self.get_post_data()(params=("myid",))
+        script=self.db.Rubyscript.findbyid(myparam["myid"])["script"]
+        print(script)
+        self.set_notice("votre ruby script a pas été ajouté erreur")
+        self.set_json("{\"redirect\":\"/rubyscript/"+str(myparam["rubyrecipe_id"])+"\"}")
+        return self.render_figure.render_json()
+    def addrubyrecipe(self,params={}):
+        myparam=self.get_post_data()(params=("rubyrecipe_id","title","script",))
+        self.user=self.db.Rubyscript.create(myparam)
+        if self.user["rubyscript_id"]:
+            self.set_notice("votr ruby script a été ajouté")
+            self.set_json("{\"redirect\":\"/rubyscript/"+str(myparam["rubyrecipe_id"])+"\"}")
             return self.render_figure.render_json()
         else:
-            self.set_notice("votr truc a pas été ajouté erreur")
-            self.set_json("{\"redirect\":\"/newstuff\"}")
+            self.set_notice("votre ruby script a pas été ajouté erreur")
+            self.set_json("{\"redirect\":\"/pythonscript/"+str(myparam["rubyrecipe_id"])+"\"}")
+            return self.render_figure.render_json()
+    def addpythonrecipe(self,params={}):
+        myparam=self.get_post_data()(params=("pythonrecipe_id","title","script",))
+        self.user=self.db.Pythonscript.create(myparam)
+        if self.user["pythonscript_id"]:
+            self.set_notice("votr python script a été ajouté")
+            self.set_json("{\"redirect\":\"/pythonscript/"+str(myparam["pythonrecipe_id"])+"\"}")
+            return self.render_figure.render_json()
+        else:
+            self.set_notice("votr python script a pas été ajouté erreur")
+            self.set_json("{\"redirect\":\"/pythonscript/"+str(myparam["pythonrecipe_id"])+"\"}")
             return self.render_figure.render_json()
     def save_user(self,params={}):
         myparam=self.get_post_data()(params=("country_id","phone","email","gender","mypic","password","password_security","nomcomplet"))
@@ -257,20 +282,16 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
-            '^/new$': self.nouveau,
-            '^/editmyai$': self.editmyai,
-            "^/editpost/([0-9]+)$":self.editpost,
-            "^/updatepost$":self.updatepost,
-            "^/deletepost/([0-9]+)$":self.deletepost,
+            "^/addpythonrecipe$":self.addpythonrecipe,
+            "^/addrubyrecipe$":self.addrubyrecipe,
+            "^/ruby$":self.rubyrecipe,
+            "^/python$":self.pythonrecipe,
             "^/rubyrecipe/([0-9]+)$":self.rubyrecipe,
             "^/pythonrecipe/([0-9]+)$":self.pythonrecipe,
             "^/ai/([0-9]+)$":self.seepost,
             '^/welcome$': self.welcome,
             '^/signin$': self.signin,
             '^/logmeout$':self.logout,
-            '^/newstuff$':self.newstuff,
-            '^/save_stuff$':self.save_stuff,
-            '^/save_ai$':self.save_ai,
             '^/save_user$':self.save_user,
             '^/update_user$':self.update_user,
             "^/seeuser/([0-9]+)$":self.seeuser,
