@@ -18,7 +18,7 @@ import sys
 class Route():
     def __init__(self):
         self.dbUsers=User()
-        self.Program=Directory("mme AI")
+        self.Program=Directory("recettes ruby /python")
         self.Program.set_path("./")
         self.mysession={"notice":None,"email":None,"name":None}
         self.dbCountry=Country()
